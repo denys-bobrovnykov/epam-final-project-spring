@@ -1,0 +1,48 @@
+/* Header */
+header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    height: 60px;
+    background-color: cadetblue;
+    padding: 20px;
+}
+header .language-badge-container {
+    display: flex;
+}
+header .language-badge-container p {
+    margin-bottom: 0;
+}
+
+header ul {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+header ul li {
+    margin-left: 20px;
+}
+
+header a {
+    text-decoration: none;
+    color: whitesmoke;
+}
+/* ---- */
+/* Main */
+main {
+    margin-bottom: 100px;
+}
+/* ------ */
+/* Footer */
+footer {
+    position: fixed;
+    bottom: 0px;
+    height: 60px;
+    width: 100%;
+    background-color: cadetblue;
+}

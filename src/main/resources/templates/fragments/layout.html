@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+</head>
+<header th:fragment="header">
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-secondary"
+                    th:text="#{sign.out}">Sign out</button>
+        </form>
+    </div>
+    <div class="dropdown" sec:authorize="isAnonymous()">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                data-bs-toggle="dropdown" aria-expanded="false" th:text="#{sign.in}">
+            Sign in
+        </button>
+        <div class="dropdown-menu" style="min-width: 300px;">
+            <form class="px-4 py-3" th:action="@{/home}" method="post">
+                <div class="mb-3">
+                    <label for="exampleDropdownFormEmail1" class="form-label" th:text="#{field.email}">Email address</label>
+                    <input type="email" name="email" class="form-control" id="exampleDropdownFormEmail1"
+                           th:placeholder="#{email.placeholder}" size="20">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleDropdownFormPassword1" class="form-label" th:text="#{field.password}">Password</label>
+                    <input type="password" name="password" class="form-control" id="exampleDropdownFormPassword1"
+                           th:placeholder="#{password.placeholder}" size="20">
+                </div>
+                <button type="submit" class="btn btn-primary" th:text="#{sign.in}">Sign in</button>
+            </form>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/register" th:text="#{sign.up}">Sign up</a>
+        </div>
+    </div>
+    <div class="dropdown mx-4">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-bs-toggle="dropdown" aria-expanded="false" th:text="#{lang.change}">
+            Lang
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="?lang=en" th:text="#{lang.eng}">EN</a></li>
+            <li><a class="dropdown-item" href="?lang=ua" th:text="#{lang.ua}">UA</a></li>
+        </ul>
+    </div>
+    <div sec:authorize="hasAuthority('ADMIN')">
+        <a href="/admin" th:text="#{go.admin}">Admin page</a>
+    </div>
+    <div th:if="${param.error}" th:text="#{error.login}">Invalid username and password.</div>
+</header>
+
+<div th:fragment="pagination">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <th:block th:if="${pages > 0}" th:each="page : ${#numbers.sequence(0, pages - 1)}">
+                <li class="page-item" th:classappend="${current_page == page ? 'active' : ''}"><a class="page-link" th:href="@{'?page=' + ${page}}" th:text="${page + 1}">1</a></li>
+            </th:block>
+        </ul>
+    </nav>
+</div>
+
+
+<footer th:fragment="footer">
+    <div sec:authorize="isAuthenticated()" class="text-center">
+        Logged user: <span sec:authentication="name">Bob</span>
+    </div>
+    <div sec:authorize-url="/admin" class="mx-4 text-center">
+        This will only be displayed if authenticated user can call the "/admin" URL.
+    </div>
+</footer>
+
+
+</html>

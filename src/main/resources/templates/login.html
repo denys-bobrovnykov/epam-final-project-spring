@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <title>Login</title>
+</head>
+<body>
+
+<div class="container-sm">
+    <div class="row-cols-md-3">
+        <p th:if="${param.logout}">
+            You have been logged out.
+        </p>
+        <p th:if="${param.error}">
+            Invalid username and password.
+        </p>
+        <form th:action="@{/login}" method="post">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label" >Email address</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="your email" name="email">
+            </div>
+            <!--    <div><label> User Name : <input type="text" name="email"/> </label></div>-->
+            <!--    <div><label> Password: <input type="password" name="password"/> </label></div>-->
+            <div class="mb-3">
+                <label for="exampleFormControlInput2" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleFormControlInput2" placeholder="password" name="password">
+            </div>
+            <div>
+                <input type="submit" value="Login"/>
+                <a href="/register">Registration</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>

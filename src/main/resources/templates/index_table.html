@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <!-- Bootstrap CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <title>Home schedule</title>
+</head>
+<body>
+<header th:replace="fragments/layout :: header" />
+
+<main class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Day</th>
+            <th scope="col">Time</th>
+            <th scope="col">Title</th>
+            <th scope="col">Free seats</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="row : ${rows}">
+            <tr>
+                <th scope="row" th:utext="${row.getDayOfWeek()}">Date</th>
+                <td th:utext="#{${'day-' + row.getDayOfWeek().toLocalDate().getDayOfWeek().getValue() + '-pag'}}">Day</td>
+                <td th:utext="${row.getTimeStart()}">Time</td>
+                <td th:utext="${row.getMovieTitleEn()}">Title</td>
+                <td th:utext="${row.getFreeSeats()}">FreeSeats</td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+
+<div th:replace="fragments/layout :: pagination" />
+
+</main>
+
+
+<footer th:replace="fragments/layout :: footer">
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>

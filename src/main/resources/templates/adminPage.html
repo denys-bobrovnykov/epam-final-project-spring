@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <!-- Bootstrap CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <title>Admin page</title>
+</head>
+<body>
+
+<header th:replace="fragments/headerAdmin :: header-admin"/>
+
+<main class="container">
+    <div class="day-container container mb-5">
+        <h2 th:text="#{go.admin}">Admin page</h2>
+    </div>
+    <p th:text="${param.message} ? ${param.message} : ''"></p>
+    <!--    Display all sessions    -->
+    <div class="container mb-5">
+        <h3>Sessions</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Day</th>
+                <th scope="col">Time</th>
+                <th scope="col">Title</th>
+                <th scope="col">Free seats</th>
+                <th scope="col">Remove session</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="row : ${rows}">
+                <tr>
+                    <th scope="row" th:utext="${row.getDayOfWeek()}">Date</th>
+                    <td th:utext="#{${'day-' + row.getDayOfWeek().toLocalDate().getDayOfWeek().getValue() + '-pag'}}">Day</td>
+                    <td th:utext="${row.getTimeStart()}">Time</td>
+                    <td th:utext="${row.getMovieTitleEn()}">Title</td>
+                    <td th:utext="${row.getFreeSeats()}">FreeSeats</td>
+                    <td>
+                        <form action="#" th:action="@{/admin/sessions/{id}(id=${row.getSessionId()})}" method="post">
+                            <input th:type="hidden" name="_method" value="DELETE">
+                            <input type="submit" value="remove">
+                        </form>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <div th:replace="fragments/layout :: pagination" />
+    </div>
+
+    <div class="container mb-5">
+        <h3>Create session</h3>
+        <form th:action="@{/admin/sessions}" method="post">
+            <!--    Add session -->
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01" th:text="#{option.day}">Day</label>
+                <input type="date" id="inputGroupSelect01" name="dayOfWeek">
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect02" th:text="#{option.time}">Time start</label>
+                <select class="form-select" id="inputGroupSelect02" name="timeStart">
+<!--                    Generate from db all available start times -->
+                    <option value="15:00:00">15:00</option>
+                    <option value="17:00:00">17:00</option>
+                    <option value="19:00:00">19:00</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect03" th:text="#{option.movie}">Movie</label>
+                <select class="form-select" id="inputGroupSelect03" name="movie">
+<!--                    Generate from db all available movies -->
+                    <th:block th:each="movie : ${movies}">
+                        <option th:value="${movie.getId()}"
+                                th:text="${(#locale.getLanguage() == 'en') ? movie.getTitleEn() : movie.getTitleUa()}"></option>
+                    </th:block>
+                </select>
+            </div>
+            <input type="submit" th:value="#{add.session}">
+        </form>
+    </div>
+    <div class="container mb-5">
+        <h3>Add movie</h3>
+        <form th:action="@{/admin/movies}" method="post">
+            <!--    Add movie   -->
+            <div class="input-group mb-3">
+                <span class="input-group-text">Title EN</span>
+                <input type="text" name="titleEn" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Title UA</span>
+                <input type="text"  name="titleUa" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Release year</span>
+                <input type="text" name="releaseYear" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Running tiime</span>
+                <input type="text" name="runningTime" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Poster english file name</span>
+                <input type="text" name="posterEn" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Poster ukrainian file name</span>
+                <input type="text" name="posterUa" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <input type="submit" value="Add">
+        </form>
+    </div>
+
+</main>
+
+<footer th:replace="fragments/layout :: footer"/>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>
