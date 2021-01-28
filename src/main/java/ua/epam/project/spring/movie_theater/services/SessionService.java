@@ -3,15 +3,16 @@ package ua.epam.project.spring.movie_theater.services;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ua.epam.project.spring.movie_theater.dbview.IndexTableRow;
+import org.springframework.transaction.annotation.Transactional;
+import ua.epam.project.spring.movie_theater.dto.SessionDTO;
 import ua.epam.project.spring.movie_theater.entities.Session;
-import ua.epam.project.spring.movie_theater.dbview.FreeSeats;
+import ua.epam.project.spring.movie_theater.exceptions.DBexception;
 import ua.epam.project.spring.movie_theater.repositories.SessionRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 import static ua.epam.project.spring.movie_theater.config.Constants.PAGE_SIZE;
 
@@ -23,50 +24,43 @@ public class SessionService {
         this.sessionRepository = sessionRepository;
     }
 
-    // Table view
-    public List<IndexTableRow> getTableViewRows(Integer page, String sort) {
-//        Integer start = page * PAGE_SIZE;
-        Integer end = page * PAGE_SIZE;
-        String order1 = null;
-        String order2 = null;
-        if (sort == null) {
-            order1 = "dayOfWeek";
-            order2 = "timeStart";
-        } else {
-            order1 = sort;
-            order2 = null;
-        }
-        return sessionRepository.getIndexTableViewData(PAGE_SIZE, end);
-//        return sessionRepository.getIndexTableViewData("dayOfWeek", order2, PAGE_SIZE, end);
-    }
 
     public Session getSessionByDayTime(LocalDate day, LocalTime time) {
         return sessionRepository.getSessionByDayOfWeekAndTimeStart(day, time);
     }
 
-    public void saveSession(Session session) {
-        sessionRepository.save(session);
+    @Transactional
+    public Session saveSession(SessionDTO session) throws DBexception {
+        Session sessionFromDb = getSessionByDayTime(session.getDayOfWeek(), session.getTimeStart());
+        if (sessionFromDb != null) {
+            throw new DBexception("error.session.exists");
+        }
+        return sessionRepository.save(Session.sessionBuilder()
+                .dayOfWeek(session.getDayOfWeek())
+                .timeStart(session.getTimeStart())
+                .movie(session.getMovie())
+                .build()
+        );
     }
 
-    public List<FreeSeats> getFreeSeatsForSession(Integer day) {
-        return sessionRepository.getFreeSeatsForSessions(day);
-    }
-
-    public void save(Session session) {
-        sessionRepository.save(session);
-    }
-
-    public Page<Session> getSessionsPage(Integer page) {
-        Pageable pageRequest = PageRequest.of(page, 5);
+    public Page<Session> getSessionsPage(Integer page, Sort orders) {
+        Pageable pageRequest = PageRequest.of(page, PAGE_SIZE, orders);
         return sessionRepository.findAll(pageRequest);
     }
 
-    public void deleteSession(Session session) {
-        sessionRepository.delete(session);
-    }
 
-    public Session findSessionById(Integer id) {
-        return sessionRepository.findById(id).orElse(null);
+    @Transactional
+    public boolean deleteSession(Integer id) throws DBexception {
+        Session sessionFromDB = sessionRepository.findById(id).orElse(null);
+        if (sessionFromDB == null) {
+            throw new DBexception("error.session.not.exist");
+        }
+        try {
+            sessionRepository.deleteById(id);
+        } catch (Exception ex) {
+            // log
+        }
+        return true;
     }
 
     public Long getRowsCount() {

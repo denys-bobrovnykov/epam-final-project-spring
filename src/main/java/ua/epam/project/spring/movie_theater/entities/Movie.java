@@ -114,6 +114,77 @@ public class Movie {
         this.releaseYear = releaseYear;
     }
 
+    private Movie(MovieBuilder builder) {
+       this.titleEn = builder.titleEn;
+       this.titleUa = builder.titleUa;
+       this.releaseYear = builder.releaseYear;
+       this.runningTime = builder.runningTime;
+       this.descriptionEn = builder.descriptionEn;
+       this.descriptionUa = builder.descriptionUa;
+       this.posterEn = builder.posterEn;
+       this.posterUa = builder.posterUa;
+    }
+
+    public static MovieBuilder movieBuilder() {
+        return new MovieBuilder();
+    }
+
+    public static class MovieBuilder {
+        private String titleEn;
+        private String titleUa;
+        private int releaseYear;
+        private int runningTime;
+        private String descriptionUa;
+        private String descriptionEn;
+        private String posterUa;
+        private String posterEn;
+
+        public Movie build() {
+            return new Movie(this);
+        }
+
+        public MovieBuilder titleEn(String titleEn) {
+            this.titleEn = titleEn;
+            return this;
+        }
+
+        public MovieBuilder titleUa(String titleUa) {
+            this.titleUa = titleUa;
+            return this;
+
+        }
+
+        public MovieBuilder releaseYear(int releaseYear) {
+            this.releaseYear = releaseYear;
+            return this;
+        }
+
+        public MovieBuilder runningTime(int runningTime) {
+            this.runningTime = runningTime;
+            return this;
+        }
+
+        public MovieBuilder descriptionUa(String descriptionUa) {
+            this.descriptionUa = descriptionUa;
+            return this;
+        }
+
+        public MovieBuilder descriptionEn(String descriptionEn) {
+            this.descriptionEn = descriptionEn;
+            return this;
+        }
+
+        public MovieBuilder posterUa(String posterUa) {
+            this.posterUa = posterUa;
+            return this;
+        }
+
+        public MovieBuilder posterEn(String posterEn) {
+            this.posterEn = posterEn;
+            return this;
+        }
+    }
+
     @Override
     public String toString() {
         return "Movie{" +

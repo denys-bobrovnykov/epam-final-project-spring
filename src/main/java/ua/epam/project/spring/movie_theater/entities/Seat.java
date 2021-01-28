@@ -15,7 +15,7 @@ public class Seat {
     private int seatRow;
     @Column(nullable = false)
     private int seatNumber;
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = { CascadeType.REMOVE })
     @JoinTable(
             name = "seat_session",
             joinColumns = { @JoinColumn(name = "seat_id") },

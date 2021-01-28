@@ -2,17 +2,41 @@ package ua.epam.project.spring.movie_theater.dto;
 
 
 import org.springframework.format.annotation.DateTimeFormat;
+import ua.epam.project.spring.movie_theater.dto.validators.StartTimeConstraint;
 import ua.epam.project.spring.movie_theater.entities.Movie;
+import ua.epam.project.spring.movie_theater.entities.Seat;
 
+import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Set;
 
 public class SessionDTO {
+    @FutureOrPresent(message = "alert.field.past.today")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dayOfWeek;
     @DateTimeFormat(pattern = "kk:mm:ss")
+    @StartTimeConstraint(message = "error.field.start.time")
     private LocalTime timeStart;
     private Movie movie;
+    private Set<Seat> seats;
+    private int seatsBought;
+
+    public Set<Seat> getSeats() {
+        return seats;
+    }
+
+    public int getSeatsBought() {
+        return seatsBought;
+    }
+
+    public void setSeatsBought(int seatsBought) {
+        this.seatsBought = seatsBought;
+    }
+
+    public void setSeats(Set<Seat> seats) {
+        this.seats = seats;
+    }
 
     public LocalDate getDayOfWeek() {
         return dayOfWeek;

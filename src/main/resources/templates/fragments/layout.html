@@ -48,6 +48,7 @@
         <a href="/admin" th:text="#{go.admin}">Admin page</a>
     </div>
     <div th:if="${param.error}" th:text="#{error.login}">Invalid username and password.</div>
+    <div th:if="${success}">Successful please login.</div>
 </header>
 
 <div th:fragment="pagination">

@@ -18,21 +18,21 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">Date</th>
+            <th scope="col"><a href="?sort=dayOfWeek&sort=timeStart">Sort by </a>Date</th>
             <th scope="col">Day</th>
             <th scope="col">Time</th>
-            <th scope="col">Title</th>
-            <th scope="col">Free seats</th>
+            <th scope="col"><a href="?sort=movie_id&sort=dayOfWeek&sort=timeStart">Sort by </a>Title</th>
+            <th scope="col"><a href="?sort=seatsAvail">Sort by </a>Free seats</th>
         </tr>
         </thead>
         <tbody>
         <th:block th:each="row : ${rows}">
             <tr>
                 <th scope="row" th:utext="${row.getDayOfWeek()}">Date</th>
-                <td th:utext="#{${'day-' + row.getDayOfWeek().toLocalDate().getDayOfWeek().getValue() + '-pag'}}">Day</td>
+                <td th:utext="#{${'day-' + row.getDayOfWeek().getDayOfWeek().getValue() + '-pag'}}">Day</td>
                 <td th:utext="${row.getTimeStart()}">Time</td>
-                <td th:utext="${row.getMovieTitleEn()}">Title</td>
-                <td th:utext="${row.getFreeSeats()}">FreeSeats</td>
+                <td><a th:href="@{/home/movies/{id}(id=${row.getId()})}" th:utext="${row.getMovie().getTitleEn()}"></a>Title</td>
+                <td th:utext="${row.getSeatsAvail()}">FreeSeats</td>
             </tr>
         </th:block>
         </tbody>

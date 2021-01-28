@@ -4,15 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.epam.project.spring.movie_theater.dto.MovieDTO;
 import ua.epam.project.spring.movie_theater.entities.Movie;
+import ua.epam.project.spring.movie_theater.exceptions.DBexception;
 import ua.epam.project.spring.movie_theater.repositories.MovieRepository;
 
 import java.util.List;
 
 @Service
 public class MovieService {
-    @Autowired
     private final MovieRepository movieRepository;
 
+    @Autowired
     public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
@@ -21,11 +22,18 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    public Movie getMovie(MovieDTO movie) {
-        return movieRepository.getMovieByTitleEn(movie.getTitleEn());
-    }
-
-    public void saveNewMovie(Movie newMovie) {
-        movieRepository.save(newMovie);
+    public Movie saveNewMovie(MovieDTO movie) throws DBexception {
+        Movie movieFromDB = movieRepository.getMovieByTitleEn(movie.getTitleEn()).orElse(null);
+        if (movieFromDB != null) {
+            throw new DBexception("error.movie.exist");
+        }
+        return movieRepository.save(Movie.movieBuilder().titleEn(movie.getTitleEn())
+                .titleUa(movie.getTitleUa())
+                .releaseYear(movie.getReleaseYear())
+                .runningTime(movie.getRunningTime())
+                .descriptionEn(movie.getDescriptionEn())
+                .descriptionUa(movie.getDescriptionUa())
+                .build()
+        );
     }
 }

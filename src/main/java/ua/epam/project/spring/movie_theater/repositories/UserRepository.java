@@ -3,6 +3,9 @@ package ua.epam.project.spring.movie_theater.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ua.epam.project.spring.movie_theater.entities.User;
 
+import java.util.Optional;
+
+
 public interface UserRepository extends JpaRepository<User, Integer> {
-    User findUserByEmail(String email);
+    Optional<User> findUserByEmail(String email);
 }

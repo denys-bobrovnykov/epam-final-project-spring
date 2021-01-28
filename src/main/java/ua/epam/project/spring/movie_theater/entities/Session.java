@@ -26,9 +26,19 @@ public class Session {
     @ManyToOne
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
+    @Column(name = "seats_available", columnDefinition = "INT NOT NULL DEFAULT 0")
+    private Integer seatsAvail;
 
     public Movie getMovie() {
         return movie;
+    }
+
+    public Integer getSeatsAvail() {
+        return seatsAvail;
+    }
+
+    public void setSeatsAvail(Integer seatsBought) {
+        this.seatsAvail = seatsBought;
     }
 
     public void setMovie(Movie movie) {
@@ -70,4 +80,36 @@ public class Session {
         this.seats = seats;
     }
 
+    public static SessionBuilder sessionBuilder() {
+        return new SessionBuilder();
+    }
+
+    private Session(SessionBuilder builder) {
+        this.dayOfWeek = builder.dayOfWeek;
+        this.timeStart = builder.timeStart;
+        this.movie = builder.movie;
+    }
+
+    public static class SessionBuilder {
+        private LocalDate dayOfWeek;
+        private LocalTime timeStart;
+        private Movie movie;
+
+        public Session build() {
+            return new Session(this);
+        }
+
+        public SessionBuilder dayOfWeek(LocalDate dayOfWeek) {
+            this.dayOfWeek = dayOfWeek;
+            return this;
+        }
+        public SessionBuilder timeStart(LocalTime timeStart) {
+            this.timeStart = timeStart;
+            return this;
+        }
+        public SessionBuilder movie(Movie movie) {
+            this.movie = movie;
+            return this;
+        }
+    }
 }

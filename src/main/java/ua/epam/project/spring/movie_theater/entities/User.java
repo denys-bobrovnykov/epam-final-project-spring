@@ -1,6 +1,7 @@
 package ua.epam.project.spring.movie_theater.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -61,6 +62,46 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public static UserBuilder userBuilder() {
+        return new UserBuilder();
+    }
+
+    private User(UserBuilder builder) {
+        this.email = builder.email;
+        this.password = builder.password;
+        this.enabled = builder.enabled;
+        this.roles = builder.roles;
+    }
+
+    public static class UserBuilder {
+        private String email;
+        private String password;
+        private Boolean enabled;
+        private Set<Role> roles = new HashSet<>();
+
+        public User build() {
+            return new User(this);
+        }
+
+        public UserBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+        public UserBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+        public UserBuilder enabled(Boolean isEnabled) {
+            this.enabled = isEnabled;
+            return this;
+        }
+        public UserBuilder role(Set<Role> role) {
+            this.roles = role;
+            return this;
+        }
+
     }
 
 }

@@ -38,12 +38,12 @@
             <th:block th:each="row : ${rows}">
                 <tr>
                     <th scope="row" th:utext="${row.getDayOfWeek()}">Date</th>
-                    <td th:utext="#{${'day-' + row.getDayOfWeek().toLocalDate().getDayOfWeek().getValue() + '-pag'}}">Day</td>
+                    <td th:utext="#{${'day-' + row.getDayOfWeek().getDayOfWeek().getValue() + '-pag'}}">Day</td>
                     <td th:utext="${row.getTimeStart()}">Time</td>
-                    <td th:utext="${row.getMovieTitleEn()}">Title</td>
-                    <td th:utext="${row.getFreeSeats()}">FreeSeats</td>
+                    <td th:utext="${row.getMovie().getTitleEn()}">Title</td>
+                    <td th:utext="${row.getSeatsAvail()}">FreeSeats</td>
                     <td>
-                        <form action="#" th:action="@{/admin/sessions/{id}(id=${row.getSessionId()})}" method="post">
+                        <form action="#" th:action="@{/admin/sessions/{id}(id=${row.getId()})}" method="post">
                             <input th:type="hidden" name="_method" value="DELETE">
                             <input type="submit" value="remove">
                         </form>
@@ -54,7 +54,14 @@
         </table>
         <div th:replace="fragments/layout :: pagination" />
     </div>
-
+    <div class="container">
+        <th:block th:if="${errors}" th:each="err : ${errors}">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                <p th:utext="${err.getDefaultMessage()}"></p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </th:block>
+    </div>
     <div class="container mb-5">
         <h3>Create session</h3>
         <form th:action="@{/admin/sessions}" method="post">
@@ -67,9 +74,9 @@
                 <label class="input-group-text" for="inputGroupSelect02" th:text="#{option.time}">Time start</label>
                 <select class="form-select" id="inputGroupSelect02" name="timeStart">
 <!--                    Generate from db all available start times -->
-                    <option value="15:00:00">15:00</option>
-                    <option value="17:00:00">17:00</option>
-                    <option value="19:00:00">19:00</option>
+                    <th:block th:each="i : ${#numbers.sequence(9, 22)}">
+                        <option th:value="${(i < 10 ? '0' + i : i) + ':00:00'}" th:text="${i + ':00'}">10:00</option>
+                    </th:block>
                 </select>
             </div>
             <div class="input-group mb-3">
@@ -102,7 +109,7 @@
                 <input type="text" name="releaseYear" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
             </div>
             <div class="input-group mb-3">
-                <span class="input-group-text">Running tiime</span>
+                <span class="input-group-text">Running time</span>
                 <input type="text" name="runningTime" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
             </div>
             <div class="input-group mb-3">
