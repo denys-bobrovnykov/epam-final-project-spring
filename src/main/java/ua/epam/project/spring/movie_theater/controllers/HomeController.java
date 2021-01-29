@@ -2,7 +2,6 @@ package ua.epam.project.spring.movie_theater.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,28 +16,20 @@ import static ua.epam.project.spring.movie_theater.utils.Utils.*;
 public class HomeController {
 
     private final MovieSessionService sessionService;
-    private final SeatService seatService;
 
     @Autowired
-    public HomeController(MovieSessionService sessionService, SeatService seatService) {
+    public HomeController(MovieSessionService sessionService) {
         this.sessionService = sessionService;
-        this.seatService = seatService;
     }
 
     @GetMapping("/home")
-    public String homeTableView(@RequestParam(value = "page", required = false) Integer page,
-                                @RequestParam(value = "sort", required = false) String sort, Model model) {
-        Sort orders = getOrdersFromQueryParams(sort);
-        page = setValueToZeroIfNotProvidedOrNegative(page);
-        Page<MovieSession> rows = sessionService.getSessionsPage(page, orders);
-        Long totalSeats = seatService.getTotalSeats();
-        Long sessionCount = sessionService.getRowsCount();
-        Integer pagesCount = getPagesCount((double) sessionCount);
-        setPagingAttributes(page, model, rows, pagesCount);
-        model.addAttribute("seats_total", totalSeats);
+    public String homeTableView(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+                                @RequestParam(value = "sort", required = false, defaultValue = "dayOfWeek,timeStart") String sortParam,
+                                @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir,
+                                Model model) {
+        Page<MovieSession> tablePage = sessionService.getPage(sortParam, sortDir, setValueToZeroIfNotProvidedOrNegative(page));
+        setModelParams(page, sortParam, sortDir, model, tablePage);
         return "index_table";
     }
-
-
 
 }

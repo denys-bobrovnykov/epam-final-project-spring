@@ -18,11 +18,11 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col"><a href="?sort=dayOfWeek&sort=timeStart">Sort by </a>Date</th>
+            <th scope="col"><a th:href="@{'?sort=dayOfWeek&sort=timeStart&sortDir=' + ${revSortDir}}">Sort by </a>Date</th>
             <th scope="col">Day</th>
             <th scope="col">Time</th>
-            <th scope="col"><a href="?sort=movie_id.title_en&sort=dayOfWeek&sort=timeStart">Sort by </a>Title</th>
-            <th scope="col"><a href="?sort=seatsAvail">Sort by </a>Free seats</th>
+            <th scope="col"><a href="#">Sort by </a>Title</th>
+            <th scope="col"><a th:href="@{'?sort=seatsAvail&sortDir=' + ${revSortDir}}">Sort by </a>Free seats</th>
         </tr>
         </thead>
         <tbody>

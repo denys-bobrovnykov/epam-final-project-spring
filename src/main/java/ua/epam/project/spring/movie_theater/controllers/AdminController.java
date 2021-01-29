@@ -39,18 +39,13 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public String adminPage(@RequestParam(value = "page", required = false) Integer page,
-                            @RequestParam(value = "sort", required = false) String sort,
+    public String adminPage(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+                            @RequestParam(value = "sort", required = false, defaultValue = "dayOfWeek, timeStart") String sortParam,
+                            @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir,
                             Model model) {
         // Sessions
-        Sort orders = getOrdersFromQueryParams(sort);
-        page = setValueToZeroIfNotProvidedOrNegative(page);
-        Page<MovieSession> rows = sessionService.getSessionsPage(page, orders);
-        Long totalSeats = seatService.getTotalSeats();
-        Long sessionCount = sessionService.getRowsCount();
-        Integer pagesCount = getPagesCount((double) sessionCount);
-        setPagingAttributes(page, model, rows, pagesCount);
-        model.addAttribute("seats_total", totalSeats);
+        Page<MovieSession> tablePage = sessionService.getPage(sortParam, sortDir, setValueToZeroIfNotProvidedOrNegative(page));
+        setModelParams(page, sortParam, sortDir, model, tablePage);
         // Movies
         List<Movie> movieList;
         movieList = movieService.getAllMovies();

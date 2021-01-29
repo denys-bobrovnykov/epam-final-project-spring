@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import static ua.epam.project.spring.movie_theater.config.Constants.PAGE_SIZE;
+import static ua.epam.project.spring.movie_theater.utils.Utils.getOrdersFromQueryParams;
 
 @Service
 public class MovieSessionService {
@@ -33,6 +34,13 @@ public class MovieSessionService {
         return movieSessionRepository.findById(id).orElse(null);
     }
 
+
+    public Page<MovieSession> getPage(String sort, String sortDir, Integer page) {
+        Sort orders = getOrdersFromQueryParams(sort, sortDir);
+        Pageable pageRequest = PageRequest.of(page, PAGE_SIZE, orders);
+        return movieSessionRepository.findAll(pageRequest);
+    }
+
     @Transactional
     public MovieSession saveSession(SessionDTO session) throws DBexception {
         MovieSession sessionFromDb = getSessionByDayTime(session.getDayOfWeek(), session.getTimeStart());
@@ -47,12 +55,6 @@ public class MovieSessionService {
         );
     }
 
-    public Page<MovieSession> getSessionsPage(Integer page, Sort orders) {
-        Pageable pageRequest = PageRequest.of(page, PAGE_SIZE, orders);
-        return movieSessionRepository.findAll(pageRequest);
-    }
-
-
     @Transactional
     public boolean deleteSession(Integer id) throws DBexception {
         MovieSession sessionFromDB = movieSessionRepository.findById(id).orElse(null);
@@ -65,9 +67,5 @@ public class MovieSessionService {
             // log
         }
         return true;
-    }
-
-    public Long getRowsCount() {
-        return movieSessionRepository.count();
     }
 }

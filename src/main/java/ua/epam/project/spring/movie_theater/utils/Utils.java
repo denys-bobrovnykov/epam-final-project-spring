@@ -1,7 +1,9 @@
 package ua.epam.project.spring.movie_theater.utils;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
+import ua.epam.project.spring.movie_theater.entities.MovieSession;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,25 +27,20 @@ public class Utils {
         return (Integer) (int) Math.ceil(rowcount / PAGE_SIZE);
     }
 
-    /**
-     * Stores model attributes for pagination controls
-     * @param page current page number
-     * @param model Model object
-     * @param rows table rows
-     * @param pagesCount total pages
-     * @param <K> Type of page
-     * @param <M> Type of model
-     * @param <T> Type of rows iterable container
-     */
-    public static<K extends Integer, M extends Model, T extends Iterable<?>> void setPagingAttributes(K page, M model, T rows, K pagesCount) {
-        model.addAttribute("current_page", page);
-        model.addAttribute("pages", pagesCount);
-        model.addAttribute("rows", rows);
+
+    public static Sort getOrdersFromQueryParams(String sortField, String dir) {
+        return dir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField.split(",")).ascending() :
+                Sort.by(sortField.split(",")).descending();
     }
 
-    public static Sort getOrdersFromQueryParams(String sort) {
-        return sort == null
-                ? Sort.by("dayOfWeek", "timeStart")
-                : Sort.by(sort.split(","));
+    public static Model setModelParams(Integer page, String sortParam, String sortDir, Model model, Page<MovieSession> tablePage) {
+        model.addAttribute("current_page", page);
+        model.addAttribute("pages", tablePage.getTotalPages());
+        model.addAttribute("rows", tablePage);
+        model.addAttribute("sortParam", sortParam);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("revSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        return model;
     }
+
 }
