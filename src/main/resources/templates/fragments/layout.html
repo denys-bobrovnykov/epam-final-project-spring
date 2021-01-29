@@ -7,7 +7,7 @@
 <header th:fragment="header">
     <div sec:authorize="isAuthenticated()">
         <form th:action="@{/logout}" method="post">
-            <button type="submit" class="btn btn-secondary"
+            <button type="submit" class="btn btn-secondary text-nowrap"
                     th:text="#{sign.out}">Sign out</button>
         </form>
     </div>
@@ -44,9 +44,25 @@
             <li><a class="dropdown-item" href="?lang=ua" th:text="#{lang.ua}">UA</a></li>
         </ul>
     </div>
-    <div sec:authorize="hasAuthority('ADMIN')">
-        <a href="/admin" th:text="#{go.admin}">Admin page</a>
+    <div class="container justify-center">
+        <nav aria-label="breadcrumb">
+            <ul class="breadcrumb mb-0">
+                <li class="breadcrumb-item" th:if="${#httpServletRequest.getRequestURI() != '/home'}">
+                    <a href="/home" th:text="#{go.home}">Home page</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page"
+                    sec:authorize="hasAuthority('ADMIN')" th:if="${#httpServletRequest.getRequestURI() != '/admin'}">
+                    <a href="/admin" th:text="#{go.admin}">Admin page</a>
+                </li>
+            </ul>
+        </nav>
     </div>
+<!--    <div th:if="${#httpServletRequest.getRequestURI() != '/home'}">-->
+<!--        <a href="/home" th:text="#{go.home}">Admin page</a>-->
+<!--    </div>-->
+<!--    <div sec:authorize="hasAuthority('ADMIN')">-->
+<!--        <a href="/admin" th:text="#{go.admin}">Admin page</a>-->
+<!--    </div>-->
     <div th:if="${param.error}" th:text="#{error.login}">Invalid username and password.</div>
     <div th:if="${success}">Successful please login.</div>
 </header>

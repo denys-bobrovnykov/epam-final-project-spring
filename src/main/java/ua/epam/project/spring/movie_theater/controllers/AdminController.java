@@ -14,10 +14,10 @@ import ua.epam.project.spring.movie_theater.services.MovieService;
 import ua.epam.project.spring.movie_theater.dto.MovieDTO;
 import ua.epam.project.spring.movie_theater.dto.SessionDTO;
 import ua.epam.project.spring.movie_theater.entities.Movie;
-import ua.epam.project.spring.movie_theater.entities.Session;
+import ua.epam.project.spring.movie_theater.entities.MovieSession;
 import ua.epam.project.spring.movie_theater.repositories.MovieRepository;
 import ua.epam.project.spring.movie_theater.services.SeatService;
-import ua.epam.project.spring.movie_theater.services.SessionService;
+import ua.epam.project.spring.movie_theater.services.MovieSessionService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -27,12 +27,12 @@ import static ua.epam.project.spring.movie_theater.utils.Utils.*;
 @Controller
 public class AdminController {
 
-    private final SessionService sessionService;
+    private final MovieSessionService sessionService;
     private final MovieService movieService;
     private final SeatService seatService;
 
     @Autowired
-    public AdminController(MovieRepository movieRepository, SessionService sessionService, MovieService movieService, SeatService seatService) {
+    public AdminController(MovieRepository movieRepository, MovieSessionService sessionService, MovieService movieService, SeatService seatService) {
         this.sessionService = sessionService;
         this.movieService = movieService;
         this.seatService = seatService;
@@ -45,7 +45,7 @@ public class AdminController {
         // Sessions
         Sort orders = getOrdersFromQueryParams(sort);
         page = setValueToZeroIfNotProvidedOrNegative(page);
-        Page<Session> rows = sessionService.getSessionsPage(page, orders);
+        Page<MovieSession> rows = sessionService.getSessionsPage(page, orders);
         Long totalSeats = seatService.getTotalSeats();
         Long sessionCount = sessionService.getRowsCount();
         Integer pagesCount = getPagesCount((double) sessionCount);

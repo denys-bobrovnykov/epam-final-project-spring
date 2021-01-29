@@ -7,14 +7,17 @@ import ua.epam.project.spring.movie_theater.entities.Movie;
 import ua.epam.project.spring.movie_theater.entities.Seat;
 
 import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
 
 public class SessionDTO {
+    @NotNull
     @FutureOrPresent(message = "alert.field.past.today")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dayOfWeek;
+    @NotNull
     @DateTimeFormat(pattern = "kk:mm:ss")
     @StartTimeConstraint(message = "error.field.start.time")
     private LocalTime timeStart;

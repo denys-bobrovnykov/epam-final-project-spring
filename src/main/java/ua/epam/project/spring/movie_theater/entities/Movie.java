@@ -24,13 +24,13 @@ public class Movie {
     private String posterUa;
     private String posterEn;
     @OneToMany(mappedBy = "movie")
-    private Set<Session> sessions;
+    private Set<MovieSession> sessions;
 
-    public Set<Session> getSessions() {
+    public Set<MovieSession> getSessions() {
         return sessions;
     }
 
-    public void setSessions(Set<Session> sessions) {
+    public void setSessions(Set<MovieSession> sessions) {
         this.sessions = sessions;
     }
 

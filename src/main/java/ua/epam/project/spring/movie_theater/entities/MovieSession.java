@@ -10,8 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "session")
-public class Session {
+@Table(name = "movie_session")
+public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -45,7 +45,7 @@ public class Session {
         this.movie = movie;
     }
 
-    public Session() {
+    public MovieSession() {
     }
 
     public int getId() {
@@ -84,7 +84,7 @@ public class Session {
         return new SessionBuilder();
     }
 
-    private Session(SessionBuilder builder) {
+    private MovieSession(SessionBuilder builder) {
         this.dayOfWeek = builder.dayOfWeek;
         this.timeStart = builder.timeStart;
         this.movie = builder.movie;
@@ -95,8 +95,8 @@ public class Session {
         private LocalTime timeStart;
         private Movie movie;
 
-        public Session build() {
-            return new Session(this);
+        public MovieSession build() {
+            return new MovieSession(this);
         }
 
         public SessionBuilder dayOfWeek(LocalDate dayOfWeek) {

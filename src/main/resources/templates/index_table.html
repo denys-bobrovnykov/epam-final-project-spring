@@ -7,8 +7,8 @@
     <meta charset="utf-8">
     <!-- Bootstrap CSS -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <title>Home schedule</title>
 </head>
 <body>
@@ -21,7 +21,7 @@
             <th scope="col"><a href="?sort=dayOfWeek&sort=timeStart">Sort by </a>Date</th>
             <th scope="col">Day</th>
             <th scope="col">Time</th>
-            <th scope="col"><a href="?sort=movie_id&sort=dayOfWeek&sort=timeStart">Sort by </a>Title</th>
+            <th scope="col"><a href="?sort=movie_id.title_en&sort=dayOfWeek&sort=timeStart">Sort by </a>Title</th>
             <th scope="col"><a href="?sort=seatsAvail">Sort by </a>Free seats</th>
         </tr>
         </thead>
@@ -31,7 +31,7 @@
                 <th scope="row" th:utext="${row.getDayOfWeek()}">Date</th>
                 <td th:utext="#{${'day-' + row.getDayOfWeek().getDayOfWeek().getValue() + '-pag'}}">Day</td>
                 <td th:utext="${row.getTimeStart()}">Time</td>
-                <td><a th:href="@{/home/movies/{id}(id=${row.getId()})}" th:utext="${row.getMovie().getTitleEn()}"></a>Title</td>
+                <td><a th:href="@{/home/details/{id}(id=${row.getId()})}" th:utext="${row.getMovie().getTitleEn()}"></a></td>
                 <td th:utext="${row.getSeatsAvail()}">FreeSeats</td>
             </tr>
         </th:block>

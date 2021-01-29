@@ -7,13 +7,13 @@
     <meta charset="utf-8">
     <!-- Bootstrap CSS -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <title>Admin page</title>
 </head>
 <body>
 
-<header th:replace="fragments/headerAdmin :: header-admin"/>
+<header th:replace="fragments/layout :: header"/>
 
 <main class="container">
     <div class="day-container container mb-5">
@@ -40,7 +40,7 @@
                     <th scope="row" th:utext="${row.getDayOfWeek()}">Date</th>
                     <td th:utext="#{${'day-' + row.getDayOfWeek().getDayOfWeek().getValue() + '-pag'}}">Day</td>
                     <td th:utext="${row.getTimeStart()}">Time</td>
-                    <td th:utext="${row.getMovie().getTitleEn()}">Title</td>
+                    <td><a th:href="@{/home/details/{id}(id=${row.getId()})}" th:utext="${row.getMovie().getTitleEn()}"></a></td>
                     <td th:utext="${row.getSeatsAvail()}">FreeSeats</td>
                     <td>
                         <form action="#" th:action="@{/admin/sessions/{id}(id=${row.getId()})}" method="post">

@@ -21,7 +21,7 @@ public class Seat {
             joinColumns = { @JoinColumn(name = "seat_id") },
             inverseJoinColumns = { @JoinColumn(name = "session_id") }
     )
-    Set<Session> sessions = new HashSet<>();
+    Set<MovieSession> sessions = new HashSet<>();
 
     public Seat() {
     }
@@ -50,11 +50,11 @@ public class Seat {
         this.seatNumber = seatNumber;
     }
 
-    public Set<Session> getSessions() {
+    public Set<MovieSession> getSessions() {
         return sessions;
     }
 
-    public void setSessions(Set<Session> sessions) {
+    public void setSessions(Set<MovieSession> sessions) {
         this.sessions = sessions;
     }
 }

@@ -7,9 +7,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.epam.project.spring.movie_theater.dto.SessionDTO;
-import ua.epam.project.spring.movie_theater.entities.Session;
+import ua.epam.project.spring.movie_theater.entities.MovieSession;
 import ua.epam.project.spring.movie_theater.exceptions.DBexception;
-import ua.epam.project.spring.movie_theater.repositories.SessionRepository;
+import ua.epam.project.spring.movie_theater.repositories.MovieSessionRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,25 +17,29 @@ import java.time.LocalTime;
 import static ua.epam.project.spring.movie_theater.config.Constants.PAGE_SIZE;
 
 @Service
-public class SessionService {
-    private final SessionRepository sessionRepository;
+public class MovieSessionService {
+    private final MovieSessionRepository movieSessionRepository;
 
-    public SessionService(SessionRepository sessionRepository) {
-        this.sessionRepository = sessionRepository;
+    public MovieSessionService(MovieSessionRepository movieSessionRepository) {
+        this.movieSessionRepository = movieSessionRepository;
     }
 
 
-    public Session getSessionByDayTime(LocalDate day, LocalTime time) {
-        return sessionRepository.getSessionByDayOfWeekAndTimeStart(day, time);
+    public MovieSession getSessionByDayTime(LocalDate day, LocalTime time) {
+        return movieSessionRepository.getSessionByDayOfWeekAndTimeStart(day, time);
+    }
+
+    public MovieSession getSessionFromDbById(Integer id) {
+        return movieSessionRepository.findById(id).orElse(null);
     }
 
     @Transactional
-    public Session saveSession(SessionDTO session) throws DBexception {
-        Session sessionFromDb = getSessionByDayTime(session.getDayOfWeek(), session.getTimeStart());
+    public MovieSession saveSession(SessionDTO session) throws DBexception {
+        MovieSession sessionFromDb = getSessionByDayTime(session.getDayOfWeek(), session.getTimeStart());
         if (sessionFromDb != null) {
             throw new DBexception("error.session.exists");
         }
-        return sessionRepository.save(Session.sessionBuilder()
+        return movieSessionRepository.save(MovieSession.sessionBuilder()
                 .dayOfWeek(session.getDayOfWeek())
                 .timeStart(session.getTimeStart())
                 .movie(session.getMovie())
@@ -43,20 +47,20 @@ public class SessionService {
         );
     }
 
-    public Page<Session> getSessionsPage(Integer page, Sort orders) {
+    public Page<MovieSession> getSessionsPage(Integer page, Sort orders) {
         Pageable pageRequest = PageRequest.of(page, PAGE_SIZE, orders);
-        return sessionRepository.findAll(pageRequest);
+        return movieSessionRepository.findAll(pageRequest);
     }
 
 
     @Transactional
     public boolean deleteSession(Integer id) throws DBexception {
-        Session sessionFromDB = sessionRepository.findById(id).orElse(null);
+        MovieSession sessionFromDB = movieSessionRepository.findById(id).orElse(null);
         if (sessionFromDB == null) {
             throw new DBexception("error.session.not.exist");
         }
         try {
-            sessionRepository.deleteById(id);
+            movieSessionRepository.deleteById(id);
         } catch (Exception ex) {
             // log
         }
@@ -64,6 +68,6 @@ public class SessionService {
     }
 
     public Long getRowsCount() {
-        return sessionRepository.count();
+        return movieSessionRepository.count();
     }
 }
