@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface MovieSessionRepository extends PagingAndSortingRepository<MovieSession, Integer> {
 
     Optional<MovieSession> getSessionById(Integer id);
-    MovieSession getSessionByDayOfWeekAndTimeStart(LocalDate day, LocalTime timeStart);
+    MovieSession getSessionByDayOfSessionAndTimeStart(LocalDate day, LocalTime timeStart);
 }

@@ -15,9 +15,9 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "day_of_week", nullable = false)
+    @Column(name = "day_of_session", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dayOfWeek;
+    private LocalDate dayOfSession;
     @DateTimeFormat(pattern = "kk:mm:ss")
     @Column(name = "time_start", nullable = false)
     private LocalTime timeStart;
@@ -56,12 +56,12 @@ public class MovieSession {
         this.id = id;
     }
 
-    public LocalDate getDayOfWeek() {
-        return dayOfWeek;
+    public LocalDate getDayOfSession() {
+        return dayOfSession;
     }
 
-    public void setDayOfWeek(LocalDate dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
+    public void setDayOfSession(LocalDate dayOfWeek) {
+        this.dayOfSession = dayOfWeek;
     }
 
     public LocalTime getTimeStart() {
@@ -85,7 +85,7 @@ public class MovieSession {
     }
 
     private MovieSession(SessionBuilder builder) {
-        this.dayOfWeek = builder.dayOfWeek;
+        this.dayOfSession = builder.dayOfWeek;
         this.timeStart = builder.timeStart;
         this.movie = builder.movie;
     }

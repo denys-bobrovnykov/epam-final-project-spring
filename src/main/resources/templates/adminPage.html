@@ -33,8 +33,8 @@
                 <tbody>
                 <th:block th:each="row : ${rows}">
                     <tr>
-                        <th scope="row" th:utext="${row.getDayOfWeek()}">Date</th>
-                        <td th:utext="#{${'day-' + row.getDayOfWeek().getDayOfWeek().getValue() + '-pag'}}">Day</td>
+                        <th scope="row" th:utext="${row.getDayOfSession()}">Date</th>
+                        <td th:utext="#{${'day-' + row.getDayOfSession().getDayOfWeek().getValue() + '-pag'}}">Day</td>
                         <td th:utext="${row.getTimeStart()}">Time</td>
                         <td><a th:href="@{/home/details/{id}(id=${row.getId()})}"
                                th:utext="${#locale.getLanguage() == 'en' ? row.getMovie().getTitleEn() : row.getMovie().getTitleUa()}"></a></td>

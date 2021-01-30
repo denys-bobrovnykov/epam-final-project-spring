@@ -19,6 +19,7 @@ import ua.epam.project.spring.movie_theater.services.MovieSessionService;
 import javax.validation.Valid;
 import java.util.List;
 
+import static ua.epam.project.spring.movie_theater.config.Constants.DEFAULT_SORT;
 import static ua.epam.project.spring.movie_theater.utils.Utils.*;
 
 @Controller
@@ -35,7 +36,7 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String adminPage(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-                            @RequestParam(value = "sort", required = false, defaultValue = "dayOfWeek,timeStart") String sortParam,
+                            @RequestParam(value = "sort", required = false, defaultValue = DEFAULT_SORT) String sortParam,
                             @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir,
                             Model model) {
         // Sessions

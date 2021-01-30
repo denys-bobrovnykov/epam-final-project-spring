@@ -27,7 +27,7 @@ public class MovieSessionService {
 
 
     public MovieSession getSessionByDayTime(LocalDate day, LocalTime time) {
-        return movieSessionRepository.getSessionByDayOfWeekAndTimeStart(day, time);
+        return movieSessionRepository.getSessionByDayOfSessionAndTimeStart(day, time);
     }
 
     public MovieSession getSessionFromDbById(Integer id) {
@@ -43,12 +43,12 @@ public class MovieSessionService {
 
     @Transactional
     public MovieSession saveSession(SessionDTO session) throws DBexception {
-        MovieSession sessionFromDb = getSessionByDayTime(session.getDayOfWeek(), session.getTimeStart());
+        MovieSession sessionFromDb = getSessionByDayTime(session.getDayOfSession(), session.getTimeStart());
         if (sessionFromDb != null) {
             throw new DBexception("error.session.exists");
         }
         return movieSessionRepository.save(MovieSession.sessionBuilder()
-                .dayOfWeek(session.getDayOfWeek())
+                .dayOfWeek(session.getDayOfSession())
                 .timeStart(session.getTimeStart())
                 .movie(session.getMovie())
                 .build()

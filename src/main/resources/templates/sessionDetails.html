@@ -18,8 +18,8 @@
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 th:text="${#locale.getLanguage() == 'en' ? selectedSession.getMovie().getTitleEn() : selectedSession.getMovie().getTitleUa()}" />
-                    <p class="card-text" th:text="${selectedSession.getDayOfWeek().getMonthValue() + '/' + selectedSession.getDayOfWeek().getDayOfMonth()}"/>
-                    <p class="card-text" th:text="${selectedSession.getDayOfWeek().getDayOfWeek()}"/>
+                    <p class="card-text" th:text="${selectedSession.getDayOfSession().getMonthValue() + '/' + selectedSession.getDayOfSession().getDayOfMonth()}"/>
+                    <p class="card-text" th:text="${selectedSession.getDayOfSession().getDayOfWeek()}"/>
                     <p class="card-text" th:text="#{release.year}">Release year</p>
                     <p class="card-text" th:text="${selectedSession.getMovie().getReleaseYear()}"/>
                     <p class="card-text" th:text="#{time.start}">Time start</p>

@@ -16,7 +16,7 @@ public class SessionDTO {
     @NotNull
     @FutureOrPresent(message = "alert.field.past.today")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dayOfWeek;
+    private LocalDate dayOfSession;
     @NotNull
     @DateTimeFormat(pattern = "kk:mm:ss")
     @StartTimeConstraint(message = "error.field.start.time")
@@ -41,12 +41,12 @@ public class SessionDTO {
         this.seats = seats;
     }
 
-    public LocalDate getDayOfWeek() {
-        return dayOfWeek;
+    public LocalDate getDayOfSession() {
+        return dayOfSession;
     }
 
-    public void setDayOfWeek(LocalDate dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
+    public void setDayOfSession(LocalDate dayOfSession) {
+        this.dayOfSession = dayOfSession;
     }
 
     public LocalTime getTimeStart() {
@@ -68,7 +68,7 @@ public class SessionDTO {
     @Override
     public String toString() {
         return "SessionDTO{" +
-                "dayOfWeek=" + dayOfWeek +
+                "dayOfWeek=" + dayOfSession +
                 ", timeStart=" + timeStart +
                 ", movie=" + movie +
                 '}';
