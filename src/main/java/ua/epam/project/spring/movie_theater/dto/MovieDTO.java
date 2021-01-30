@@ -18,13 +18,8 @@ public class MovieDTO {
     @Min(0)@Max(999)
     private int runningTime;
     @Size(max = 255)
-    private String descriptionUa;
-    @Size(max = 255)
-    private String descriptionEn;
     @Pattern(regexp = FILE_REGEX, message = "error.field.valid.file.poster.ua")
-    private String posterUa;
-    @Pattern(regexp = FILE_REGEX, message = "error.field.valid.file.poster.en")
-    private String posterEn;
+    private String poster;
 
     public MovieDTO(){}
 
@@ -52,56 +47,19 @@ public class MovieDTO {
         this.releaseYear = releaseYear;
     }
 
-    public String getDescriptionUa() {
-        return descriptionUa;
-    }
-
-    public void setDescriptionUa(String descriptionUa) {
-        this.descriptionUa = descriptionUa;
-    }
-
-    public String getDescriptionEn() {
-        return descriptionEn;
-    }
-
-    public void setDescriptionEn(String descriptionEn) {
-        this.descriptionEn = descriptionEn;
-    }
-
-    public String getPosterUa() {
-        return posterUa;
-    }
-
-    public void setPosterUa(String posterUa) {
-        this.posterUa = posterUa;
-    }
-
-    public String getPosterEn() {
-        return posterEn;
-    }
-
-    public void setPosterEn(String posterEn) {
-        this.posterEn = posterEn;
-    }
-
     public int getRunningTime() {
-        return this.runningTime;
+        return runningTime;
     }
+
     public void setRunningTime(int runningTime) {
         this.runningTime = runningTime;
     }
 
+    public String getPoster() {
+        return poster;
+    }
 
-    @Override
-    public String toString() {
-        return "MovieDTO{" +
-                ", titleUa='" + titleUa + '\'' +
-                ", titleEn='" + titleEn + '\'' +
-                ", releaseYear=" + releaseYear +
-                ", descriptionUa='" + descriptionUa + '\'' +
-                ", descriptionEn='" + descriptionEn + '\'' +
-                ", posterUa='" + posterUa + '\'' +
-                ", posterEn='" + posterEn + '\'' +
-                '}';
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 }

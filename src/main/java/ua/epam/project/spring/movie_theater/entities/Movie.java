@@ -1,7 +1,6 @@
 package ua.epam.project.spring.movie_theater.entities;
 
 
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -19,10 +18,7 @@ public class Movie {
     private int releaseYear;
     @Column(name = "running_time", nullable = false)
     private int runningTime;
-    private String descriptionUa;
-    private String descriptionEn;
-    private String posterUa;
-    private String posterEn;
+    private String poster;
     @OneToMany(mappedBy = "movie")
     private Set<MovieSession> sessions;
 
@@ -42,20 +38,12 @@ public class Movie {
         this.releaseYear = releaseYear;
     }
 
-    public int getRunningTime() {
-        return runningTime;
+    public int getId() {
+        return id;
     }
 
-    public void setRunningTime(int runningTime) {
-        this.runningTime = runningTime;
-    }
-
-    public String getTitleUa() {
-        return titleUa;
-    }
-
-    public void setTitleUa(String titleUa) {
-        this.titleUa = titleUa;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitleEn() {
@@ -66,44 +54,12 @@ public class Movie {
         this.titleEn = titleEn;
     }
 
-    public String getDescriptionUa() {
-        return descriptionUa;
+    public String getTitleUa() {
+        return titleUa;
     }
 
-    public void setDescriptionUa(String descriptionUa) {
-        this.descriptionUa = descriptionUa;
-    }
-
-    public String getDescriptionEn() {
-        return descriptionEn;
-    }
-
-    public void setDescriptionEn(String descriptionEn) {
-        this.descriptionEn = descriptionEn;
-    }
-
-    public String getPosterUa() {
-        return posterUa;
-    }
-
-    public void setPosterUa(String posterUa) {
-        this.posterUa = posterUa;
-    }
-
-    public String getPosterEn() {
-        return posterEn;
-    }
-
-    public void setPosterEn(String posterEn) {
-        this.posterEn = posterEn;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setTitleUa(String titleUa) {
+        this.titleUa = titleUa;
     }
 
     public int getReleaseYear() {
@@ -114,15 +70,28 @@ public class Movie {
         this.releaseYear = releaseYear;
     }
 
+    public int getRunningTime() {
+        return runningTime;
+    }
+
+    public void setRunningTime(int runningTime) {
+        this.runningTime = runningTime;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
     private Movie(MovieBuilder builder) {
        this.titleEn = builder.titleEn;
        this.titleUa = builder.titleUa;
        this.releaseYear = builder.releaseYear;
        this.runningTime = builder.runningTime;
-       this.descriptionEn = builder.descriptionEn;
-       this.descriptionUa = builder.descriptionUa;
-       this.posterEn = builder.posterEn;
-       this.posterUa = builder.posterUa;
+       this.poster = builder.poster;
     }
 
     public static MovieBuilder movieBuilder() {
@@ -134,10 +103,7 @@ public class Movie {
         private String titleUa;
         private int releaseYear;
         private int runningTime;
-        private String descriptionUa;
-        private String descriptionEn;
-        private String posterUa;
-        private String posterEn;
+        private String poster;
 
         public Movie build() {
             return new Movie(this);
@@ -164,39 +130,11 @@ public class Movie {
             return this;
         }
 
-        public MovieBuilder descriptionUa(String descriptionUa) {
-            this.descriptionUa = descriptionUa;
-            return this;
-        }
 
-        public MovieBuilder descriptionEn(String descriptionEn) {
-            this.descriptionEn = descriptionEn;
-            return this;
-        }
-
-        public MovieBuilder posterUa(String posterUa) {
-            this.posterUa = posterUa;
-            return this;
-        }
-
-        public MovieBuilder posterEn(String posterEn) {
-            this.posterEn = posterEn;
+        public MovieBuilder poster(String poster) {
+            this.poster = poster;
             return this;
         }
     }
 
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", titleUa='" + titleUa + '\'' +
-                ", titleEn='" + titleEn + '\'' +
-                ", releaseYear=" + releaseYear +
-                ", descriptionUa='" + descriptionUa + '\'' +
-                ", descriptionEn='" + descriptionEn + '\'' +
-                ", posterUa='" + posterUa + '\'' +
-                ", posterEn='" + posterEn + '\'' +
-                ", sessions=" + sessions +
-                '}';
-    }
 }

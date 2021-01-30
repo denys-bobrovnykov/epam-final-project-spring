@@ -2,7 +2,6 @@ package ua.epam.project.spring.movie_theater.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,8 +14,6 @@ import ua.epam.project.spring.movie_theater.dto.MovieDTO;
 import ua.epam.project.spring.movie_theater.dto.SessionDTO;
 import ua.epam.project.spring.movie_theater.entities.Movie;
 import ua.epam.project.spring.movie_theater.entities.MovieSession;
-import ua.epam.project.spring.movie_theater.repositories.MovieRepository;
-import ua.epam.project.spring.movie_theater.services.SeatService;
 import ua.epam.project.spring.movie_theater.services.MovieSessionService;
 
 import javax.validation.Valid;
@@ -29,13 +26,11 @@ public class AdminController {
 
     private final MovieSessionService sessionService;
     private final MovieService movieService;
-    private final SeatService seatService;
 
     @Autowired
-    public AdminController(MovieRepository movieRepository, MovieSessionService sessionService, MovieService movieService, SeatService seatService) {
+    public AdminController(MovieSessionService sessionService, MovieService movieService) {
         this.sessionService = sessionService;
         this.movieService = movieService;
-        this.seatService = seatService;
     }
 
     @GetMapping("/admin")

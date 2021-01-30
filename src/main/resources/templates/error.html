@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<header>
+    <th:block th:replace="fragments/layout :: header-guts"></th:block>
+    <title>Error</title>
+</header>
 <body>
     <h1>Something went wrong</h1>
     <p th:text="${status}"></p>

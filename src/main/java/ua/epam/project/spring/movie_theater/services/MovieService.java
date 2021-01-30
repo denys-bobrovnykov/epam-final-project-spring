@@ -27,12 +27,12 @@ public class MovieService {
         if (movieFromDB != null) {
             throw new DBexception("error.movie.exist");
         }
-        return movieRepository.save(Movie.movieBuilder().titleEn(movie.getTitleEn())
+        return movieRepository.save(Movie.movieBuilder()
+                .titleEn(movie.getTitleEn())
                 .titleUa(movie.getTitleUa())
                 .releaseYear(movie.getReleaseYear())
                 .runningTime(movie.getRunningTime())
-                .descriptionEn(movie.getDescriptionEn())
-                .descriptionUa(movie.getDescriptionUa())
+                .poster(movie.getPoster())
                 .build()
         );
     }

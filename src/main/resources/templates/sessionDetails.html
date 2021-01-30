@@ -3,27 +3,35 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <!-- Bootstrap CSS -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <th:block th:replace="fragments/layout :: header-guts"></th:block>
     <title>Session details</title>
 </head>
 <body>
 <header th:replace="fragments/layout :: header" />
 
-<main class="container">
-    <h1>Movie details</h1>
-    <p th:text="${selectedSession.getMovie().getTitleEn()}" />
-    <div class="container">
-        <table class="seats-layout-table">
-        </table>
-    </div>
-    <div class="container options">
-        <p sec:authorize="isAuthenticated()"><a th:href="@{/buy/{id}(id=${selectedSession.getId()})}" th:text="#{buy.ticket}"></a></p>
-        <p sec:authorize="isAnonymous()">Please sign in to buy ticket</p>
+<main class="container my-5">
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img class="container flow" th:src="@{/img/poster/{filename}(filename=${selectedSession.getMovie().getPoster()})}" alt="poster">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 th:text="${#locale.getLanguage() == 'en' ? selectedSession.getMovie().getTitleEn() : selectedSession.getMovie().getTitleUa()}" />
+                    <p class="card-text" th:text="#{release.year}">Release year</p>
+                    <p class="card-text" th:text="${selectedSession.getMovie().getReleaseYear()}"/>
+                    <p class="card-text" th:text="#{running.time}">Running time</p>
+                    <p class="card-text" >
+                        <span th:text="${selectedSession.getMovie().getRunningTime()}"></span> <span th:text="#{minutes}"></span>
+                    </p>
+                    <div class="container options">
+                        <p sec:authorize="isAuthenticated()">
+                            <a class="btn btn-success" th:href="@{/buy/{id}(id=${selectedSession.getId()})}" th:text="#{buy.ticket}"></a></p>
+                        <button class="btn btn-primary" sec:authorize="isAnonymous()">Please sign in to buy ticket</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 

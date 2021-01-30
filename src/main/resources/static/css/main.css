@@ -35,14 +35,20 @@ header a {
 /* ---- */
 /* Main */
 main {
+    min-height: 80vh;
     margin-bottom: 100px;
+}
+
+.schedule-section {
+    min-height: 60vh;
+}
+
+.schedule-admin {
+    min-height: 300px;
 }
 /* ------ */
 /* Footer */
 footer {
-    position: fixed;
-    bottom: 0px;
     height: 60px;
-    width: 100%;
     background-color: cadetblue;
 }

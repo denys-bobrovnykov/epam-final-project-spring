@@ -2,43 +2,49 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <th:block th:replace="fragments/layout :: header-guts"></th:block>
     <title>Login</title>
 </head>
 <body>
+<header th:replace="fragments/layout :: header" />
 
-<div class="container-sm">
-    <div class="row-cols-md-3">
-        <p th:if="${param.logout}">
-            You have been logged out.
-        </p>
-        <p th:if="${param.error}">
-            Invalid username and password.
-        </p>
-        <form th:action="@{/login}" method="post">
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label" >Email address</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="your email" name="email">
+<main class="d-flex justify-content-center container sm-5 my-5">
+    <div class="col-6 justify-items-center">
+        <h2 class="container" th:text="#{title.login}">Login</h2>
+        <form th:action="@{/login}" method="post" th:object="${userDTO}">
+            <div th:if="${param.error}" class="alert alert-warning alert-dismissible fade show" role="alert" >
+                <p th:text="#{error.login}"></p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <!--    <div><label> User Name : <input type="text" name="email"/> </label></div>-->
-            <!--    <div><label> Password: <input type="password" name="password"/> </label></div>-->
+            <th:block th:if="${#fields.hasErrors()}" th:each="err : ${#fields.errors()}">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                    <p th:utext="#{${err}}"></p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </th:block>
+            <div th:if="${error}" class="alert alert-warning alert-dismissible fade show" role="alert" >
+                <p th:text="#{${error.getMessage()}}"></p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             <div class="mb-3">
-                <label for="exampleFormControlInput2" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleFormControlInput2" placeholder="password" name="password">
+                <label for="ControlInput1" class="form-label" th:text="#{field.email}">Email address</label>
+                <input type="email" th:field="*{email}" class="form-control" id="ControlInput1" name="email">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput2" class="form-label" th:text="#{field.password}">Password</label>
+                <input type="password" th:field="*{password}" class="form-control" id="exampleFormControlInput2" name="password">
             </div>
             <div>
-                <input type="submit" value="Login"/>
-                <a href="/register">Registration</a>
+                <input class="btn btn-primary" type="submit" th:value="#{sign.in}"/>
+                <a href="/home" th:text="#{go.home}">Home page</a>
             </div>
         </form>
-    </div>
-</div>
 
-<!-- Option 1: Bootstrap Bundle with Popper -->
+    </div>
+</main>
+
+<footer th:replace="fragments/layout :: footer"/>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </body>
 </html>
