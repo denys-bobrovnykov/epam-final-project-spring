@@ -15,17 +15,6 @@
 </head>
 <!--   HEADER    -->
 <header th:fragment="header">
-<!--    LANGUAGE -->
-    <div class="dropdown mx-4">
-        <button class="btn btn-outline-secondary-light dropdown-toggle language-control" type="button" id="dropdownMenuButton"
-                data-bs-toggle="dropdown" aria-expanded="false" th:text="#{lang.change}">
-            Lang
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="?lang=en" th:text="#{lang.eng}">EN</a></li>
-            <li><a class="dropdown-item" href="?lang=ua" th:text="#{lang.ua}">UA</a></li>
-        </ul>
-    </div>
     <div class="container justify-center">
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb mb-0">
@@ -42,7 +31,7 @@
     <div th:if="${success}">Successful please login.</div>
     <div class="logout-button" sec:authorize="isAuthenticated()">
         <form th:action="@{/logout}" method="post">
-            <button type="submit" class="btn btn-outline-light text-nowrap mx-2"
+            <button type="submit" class="btn btn-outline-secondary-light text-nowrap mx-2"
                     th:text="#{sign.out}">Sign out</button>
         </form>
     </div>
@@ -56,6 +45,18 @@
             <i class="far fa-user-circle fa-3x"></i>
         </a>
     </div>
+    <!--    LANGUAGE -->
+    <div class="dropdown mx-4">
+        <button class="btn btn-outline-secondary-light dropdown-toggle language-control" type="button" id="dropdownMenuButton"
+                data-bs-toggle="dropdown" aria-expanded="false" th:text="#{lang.change}">
+            Lang
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="?lang=en" th:text="#{lang.eng}">EN</a></li>
+            <li><a class="dropdown-item" href="?lang=ua" th:text="#{lang.ua}">UA</a></li>
+        </ul>
+    </div>
+
 </header>
 
 <div th:fragment="pagination" class="">
