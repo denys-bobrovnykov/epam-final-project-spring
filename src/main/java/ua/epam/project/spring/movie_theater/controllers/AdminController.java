@@ -40,7 +40,7 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String adminPage(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-                            @RequestParam(value = "sort", required = false, defaultValue = "dayOfWeek, timeStart") String sortParam,
+                            @RequestParam(value = "sort", required = false, defaultValue = "dayOfWeek,timeStart") String sortParam,
                             @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir,
                             Model model) {
         // Sessions

@@ -22,7 +22,7 @@
         </table>
     </div>
     <div class="container options">
-        <p sec:authorize="isAuthenticated()"><a th:href="@{/buy/{id}(id=${selectedSession.getId()})}" th:text="${'buy.ticket'}"></a></p>
+        <p sec:authorize="isAuthenticated()"><a th:href="@{/buy/{id}(id=${selectedSession.getId()})}" th:text="#{buy.ticket}"></a></p>
         <p sec:authorize="isAnonymous()">Please sign in to buy ticket</p>
     </div>
 </main>

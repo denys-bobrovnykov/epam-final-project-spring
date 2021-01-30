@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ua.epam.project.spring.movie_theater.entities.Seat;
 import ua.epam.project.spring.movie_theater.entities.MovieSession;
 import ua.epam.project.spring.movie_theater.exceptions.DBexception;
@@ -39,9 +40,9 @@ public class BuyTicketController {
         return "buyTicket";
     }
 
-    @PostMapping("/buy/{sessionId}/{seatId}")
+    @PostMapping("/buy/{sessionId}")
     public String buyTicket(@PathVariable(name = "sessionId") Integer sessionId,
-                            @PathVariable(name = "seatId") Integer seatId) {
+                            @RequestParam(name = "seatId") Integer[] seatId) {
         try {
             seatService.buySeat(sessionId, seatId);
         } catch (DBexception dBexception) {

@@ -24,15 +24,7 @@
     <div class="container mb-5">
         <h3>Sessions</h3>
         <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Day</th>
-                <th scope="col">Time</th>
-                <th scope="col">Title</th>
-                <th scope="col">Free seats</th>
-                <th scope="col">Remove session</th>
-            </tr>
+            <thead th:replace="/fragments/table_header :: table_header">
             </thead>
             <tbody>
             <th:block th:each="row : ${rows}">
@@ -45,7 +37,7 @@
                     <td>
                         <form action="#" th:action="@{/admin/sessions/{id}(id=${row.getId()})}" method="post">
                             <input th:type="hidden" name="_method" value="DELETE">
-                            <input type="submit" value="remove">
+                            <input type="submit" th:value="#{remove}">
                         </form>
                     </td>
                 </tr>

@@ -9,6 +9,7 @@ import ua.epam.project.spring.movie_theater.exceptions.DBexception;
 import ua.epam.project.spring.movie_theater.repositories.SeatRepository;
 import ua.epam.project.spring.movie_theater.repositories.MovieSessionRepository;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -32,12 +33,12 @@ public class SeatService {
     }
 
     @Transactional
-    public boolean buySeat(Integer sessionId, Integer seatId) throws DBexception {
-        Seat seatFromDb = seatRepository.findById(seatId).orElseThrow(() -> new DBexception("error.not.found"));
+    public boolean buySeat(Integer sessionId, Integer[] seatId) throws DBexception {
+        List<Seat> seatFromDb = (List) seatRepository.findAllById(Arrays.asList(seatId));
         MovieSession sessionFromDb = movieSessionRepository.findById(sessionId).orElseThrow(() -> new DBexception("error.not.found"));
-        sessionFromDb.getSeats().add(seatFromDb);
-        seatFromDb.getSessions().add(sessionFromDb);
-        seatRepository.save(seatFromDb);
+        sessionFromDb.getSeats().addAll(seatFromDb);
+        seatFromDb.forEach(seat -> seat.getSessions().add(sessionFromDb));
+        seatRepository.saveAll(seatFromDb);
         movieSessionRepository.save(sessionFromDb);
         return true;
     }

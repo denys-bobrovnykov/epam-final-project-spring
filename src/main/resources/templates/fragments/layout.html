@@ -5,13 +5,14 @@
 <head>
 </head>
 <header th:fragment="header">
-    <div sec:authorize="isAuthenticated()">
+    <div class="logout-button" sec:authorize="isAuthenticated()">
         <form th:action="@{/logout}" method="post">
             <button type="submit" class="btn btn-secondary text-nowrap"
                     th:text="#{sign.out}">Sign out</button>
         </form>
     </div>
-    <div class="dropdown" sec:authorize="isAnonymous()">
+<!--    SIGN IN -->
+    <div class="dropdown login-button" sec:authorize="isAnonymous()">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                 data-bs-toggle="dropdown" aria-expanded="false" th:text="#{sign.in}">
             Sign in
@@ -34,8 +35,9 @@
             <a class="dropdown-item" href="/register" th:text="#{sign.up}">Sign up</a>
         </div>
     </div>
+<!--    LANGUAGE -->
     <div class="dropdown mx-4">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+        <button class="btn btn-outline-secondary-light dropdown-toggle language-control" type="button" id="dropdownMenuButton"
                 data-bs-toggle="dropdown" aria-expanded="false" th:text="#{lang.change}">
             Lang
         </button>

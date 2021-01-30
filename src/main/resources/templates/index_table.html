@@ -16,14 +16,7 @@
 
 <main class="container">
     <table class="table">
-        <thead>
-        <tr>
-            <th scope="col"><a th:href="@{'?sort=dayOfWeek&sort=timeStart&sortDir=' + ${revSortDir}}">Sort by </a>Date</th>
-            <th scope="col">Day</th>
-            <th scope="col">Time</th>
-            <th scope="col"><a href="#">Sort by </a>Title</th>
-            <th scope="col"><a th:href="@{'?sort=seatsAvail&sortDir=' + ${revSortDir}}">Sort by </a>Free seats</th>
-        </tr>
+        <thead th:replace="fragments/table_header :: table_header">
         </thead>
         <tbody>
         <th:block th:each="row : ${rows}">
