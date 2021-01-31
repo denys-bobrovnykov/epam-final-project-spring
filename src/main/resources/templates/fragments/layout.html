@@ -46,14 +46,14 @@
         </a>
     </div>
     <!--    LANGUAGE -->
-    <div class="dropdown mx-4">
+    <div class="dropdown mx-2">
         <button class="btn btn-outline-secondary-light dropdown-toggle language-control" type="button" id="dropdownMenuButton"
                 data-bs-toggle="dropdown" aria-expanded="false" th:text="#{lang.change}">
             Lang
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="?lang=en" th:text="#{lang.eng}">EN</a></li>
-            <li><a class="dropdown-item" href="?lang=ua" th:text="#{lang.ua}">UA</a></li>
+        <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton">
+            <li class="mx-0"><a class="dropdown-item" th:classappend="${#locale.getLanguage() == 'en' ? 'active' : ''}" href="?lang=en" th:text="#{lang.eng}">EN</a></li>
+            <li class="mx-0"><a class="dropdown-item" th:classappend="${#locale.getLanguage() == 'ua' ? 'active' : ''}" href="?lang=ua" th:text="#{lang.ua}">UA</a></li>
         </ul>
     </div>
 

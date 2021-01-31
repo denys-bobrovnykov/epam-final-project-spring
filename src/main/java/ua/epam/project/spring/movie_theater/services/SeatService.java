@@ -24,22 +24,18 @@ public class SeatService {
         this.movieSessionRepository = movieSessionRepository;
     }
 
-    public Long getTotalSeats() {
-        return seatRepository.count();
-    }
-
     public List<Seat> getAllSeatsFromDB() {
         return (List<Seat>) seatRepository.findAll();
     }
 
     @Transactional
-    public boolean buySeat(Integer sessionId, Integer[] seatId) throws DBexception {
-        List<Seat> seatFromDb = (List) seatRepository.findAllById(Arrays.asList(seatId));
+    public List<Seat> buySeat(Integer sessionId, Integer[] seatId) throws DBexception {
+        List<Seat> seatFromDb = (List<Seat>) seatRepository.findAllById(Arrays.asList(seatId));
         MovieSession sessionFromDb = movieSessionRepository.findById(sessionId).orElseThrow(() -> new DBexception("error.not.found"));
         sessionFromDb.getSeats().addAll(seatFromDb);
         seatFromDb.forEach(seat -> seat.getSessions().add(sessionFromDb));
         seatRepository.saveAll(seatFromDb);
         movieSessionRepository.save(sessionFromDb);
-        return true;
+        return seatFromDb;
     }
 }

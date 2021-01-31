@@ -1,5 +1,7 @@
 package ua.epam.project.spring.movie_theater.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -24,7 +26,7 @@ import static ua.epam.project.spring.movie_theater.utils.Utils.*;
 
 @Controller
 public class AdminController {
-
+    private final Logger logger = LogManager.getLogger(AdminController.class);
     private final MovieSessionService sessionService;
     private final MovieService movieService;
 
@@ -91,11 +93,13 @@ public class AdminController {
     }
 
     private String handleRedirectOnValidation(BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        logger.error("Validation failed {}", bindingResult);
         redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
         return "redirect:/admin";
     }
 
     private String handleException(RedirectAttributes redirectAttributes, DBexception dBexception) {
+        logger.error("Error occurred with exception", dBexception);
         redirectAttributes.addFlashAttribute("error", dBexception);
         return "redirect:/admin";
     }

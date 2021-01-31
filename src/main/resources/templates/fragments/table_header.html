@@ -1,7 +1,7 @@
-<thead th:fragment="table_header">
+<thead class="text-center" th:fragment="table_header">
 <tr>
     <th scope="col">
-        <a th:href="@{'?sort=dayOfWeek&sort=timeStart&sortDir=' + ${revSortDir}}"
+        <a th:href="@{'?sort=dayOfSession&sort=timeStart&sortDir=' + ${revSortDir}}"
            th:text="#{date}"></a></th>
     <th scope="col"><a href="#" th:text="#{weekday}"/></th>
     <th scope="col"><a th:href="@{'?sort=timeStart&sortDir=' + ${revSortDir}}" th:text="#{time.start}"/></th>

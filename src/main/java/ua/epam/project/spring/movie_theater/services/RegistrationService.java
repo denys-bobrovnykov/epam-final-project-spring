@@ -24,7 +24,7 @@ public class RegistrationService {
     @Transactional
     public User saveUser(UserDTO userDTO) throws DBexception{
         chekIfUserExists(userDTO);
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12); // Strength set as 12
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
         String encodedPassword = encoder.encode(userDTO.getPassword());
         return userRepository.save(User.userBuilder()
                 .email(userDTO.getEmail())

@@ -27,10 +27,10 @@
     <div class="container mb-5">
         <h3 th:text="#{sessions.header}">All Sessions</h3>
         <div class="schedule-admin">
-            <table class="table">
+            <table class="table align-middle table-striped">
                 <thead th:replace="/fragments/table_header :: table_header">
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                 <th:block th:each="row : ${rows}">
                     <tr>
                         <th scope="row" th:utext="${row.getDayOfSession()}">Date</th>

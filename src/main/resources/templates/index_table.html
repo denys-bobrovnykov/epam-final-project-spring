@@ -11,10 +11,10 @@
 
 <main class="container">
     <section class="container schedule-section">
-        <table class="table">
-            <thead th:replace="fragments/table_header :: table_header">
+        <table class="table align-middle table-striped">
+            <thead  th:replace="fragments/table_header :: table_header">
             </thead>
-            <tbody>
+            <tbody class="text-center">
             <th:block th:each="row : ${rows}">
                 <tr>
                     <th scope="row" th:utext="${row.getDayOfSession()}">Date</th>

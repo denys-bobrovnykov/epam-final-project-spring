@@ -25,7 +25,10 @@
                     </div>
                     <div class="mb-3">
                         <label for="ControlInput1" class="form-label" th:text="#{field.email}">Email address</label>
-                        <input type="email" th:field="*{email}" class="form-control" id="ControlInput1" name="email">
+                        <input type="email"
+                               th:field="*{email}"
+                               th:value="${emailRedirect}"
+                               class="form-control" id="ControlInput1" name="email">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput2" class="form-label" th:text="#{field.password}">Password</label>

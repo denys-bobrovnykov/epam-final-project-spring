@@ -30,8 +30,8 @@ public class MovieSessionService {
         return movieSessionRepository.getSessionByDayOfSessionAndTimeStart(day, time);
     }
 
-    public MovieSession getSessionFromDbById(Integer id) {
-        return movieSessionRepository.findById(id).orElse(null);
+    public MovieSession getSessionFromDbById(Integer id) throws DBexception {
+        return movieSessionRepository.findById(id).orElseThrow(() -> new DBexception("error.session.not.exist"));
     }
 
 

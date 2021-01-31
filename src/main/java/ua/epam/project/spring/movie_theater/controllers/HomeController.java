@@ -1,5 +1,7 @@
 package ua.epam.project.spring.movie_theater.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,7 +17,6 @@ import static ua.epam.project.spring.movie_theater.utils.Utils.*;
 
 @Controller
 public class HomeController {
-
     private final MovieSessionService sessionService;
 
     @Autowired
