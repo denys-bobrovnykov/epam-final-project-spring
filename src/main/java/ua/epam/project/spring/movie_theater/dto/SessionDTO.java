@@ -24,6 +24,24 @@ public class SessionDTO {
     private Movie movie;
     private Set<Seat> seats;
     private int seatsBought;
+    private String movieTitleEn;
+    private String movieTitleUa;
+
+    public String getMovieTitleEn() {
+        return movieTitleEn;
+    }
+
+    public void setMovieTitleEn(String movieTitleEn) {
+        this.movieTitleEn = movieTitleEn;
+    }
+
+    public String getMovieTitleUa() {
+        return movieTitleUa;
+    }
+
+    public void setMovieTitleUa(String movieTitleUa) {
+        this.movieTitleUa = movieTitleUa;
+    }
 
     public Set<Seat> getSeats() {
         return seats;

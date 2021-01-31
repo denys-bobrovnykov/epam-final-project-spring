@@ -36,6 +36,10 @@
                     <input th:if="${selectedSession.getSeats().size() < seatsTotal}" class="btn btn-success my-2" type="submit" th:value="#{buy.ticket}"/>
                 </form>
             </div>
+            <div th:if="${error}" class="alert alert-warning alert-dismissible fade show" role="alert" >
+                <p th:text="#{${error.getText()}}"></p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             <div th:if="${seats}">
                 <p>Your tickets</p>
                 <div>

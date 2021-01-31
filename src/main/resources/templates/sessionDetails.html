@@ -20,8 +20,8 @@
                 <div class="col-md-7">
                     <div class="card-body d-flex flex-column align-items-center">
                         <h5 th:text="${#locale.getLanguage() == 'en' ? selectedSession.getMovie().getTitleEn() : selectedSession.getMovie().getTitleUa()}" />
-                        <p class="card-text" th:text="${selectedSession.getDayOfSession().getMonthValue() + '/' + selectedSession.getDayOfSession().getDayOfMonth()}"/>
-                        <p class="card-text" th:text="${selectedSession.getDayOfSession().getDayOfWeek()}"/>
+                        <p class="card-text" th:text="#{${'day-' + selectedSession.getDayOfSession().getDayOfWeek().getValue()}}"/>
+                        <p class="card-text" th:text="${#temporals.format(selectedSession.getDayOfSession(), 'dd.MM')}"/>
                         <p class="card-text" th:text="#{release.year}">Release year</p>
                         <p class="card-text" th:text="${selectedSession.getMovie().getReleaseYear()}"/>
                         <p class="card-text" th:text="#{time.start}">Time start</p>

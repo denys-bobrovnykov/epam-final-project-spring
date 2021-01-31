@@ -1,5 +1,7 @@
 package ua.epam.project.spring.movie_theater.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +21,7 @@ import static ua.epam.project.spring.movie_theater.utils.Utils.getOrdersFromQuer
 
 @Service
 public class MovieSessionService {
+    private final Logger logger = LogManager.getLogger(MovieSessionService.class);
     private final MovieSessionRepository movieSessionRepository;
 
     public MovieSessionService(MovieSessionRepository movieSessionRepository) {
@@ -64,7 +67,7 @@ public class MovieSessionService {
         try {
             movieSessionRepository.deleteById(id);
         } catch (Exception ex) {
-            // log
+            logger.error("Could not delete session", ex);
         }
         return true;
     }
