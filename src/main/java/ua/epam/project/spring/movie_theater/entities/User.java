@@ -21,6 +21,16 @@ public class User {
     private String password;
     @Column(name="enabled", nullable = false)
     private boolean enabled;
+    @OneToMany(mappedBy = "user")
+    private Set<Ticket> userTickets = new HashSet<>();
+
+    public Set<Ticket> getUserTickets() {
+        return userTickets;
+    }
+
+    public void setUserTickets(Set<Ticket> userTickets) {
+        this.userTickets = userTickets;
+    }
 
     public User() {
     }

@@ -108,8 +108,8 @@ main table td > a {
     color: black;
 }
 
-main table a {
-
+main table a:hover {
+    letter-spacing: 0.5px;
 }
 .create-section {
 }

@@ -11,3 +11,6 @@ public class MovieTheaterApplication {
     }
 
 }
+// Complete filtering
+// Complete localization
+// Complete STATISTICS!!!

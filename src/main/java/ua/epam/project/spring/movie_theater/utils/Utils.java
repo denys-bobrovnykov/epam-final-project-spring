@@ -2,6 +2,8 @@ package ua.epam.project.spring.movie_theater.utils;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import ua.epam.project.spring.movie_theater.entities.MovieSession;
 
@@ -41,6 +43,17 @@ public class Utils {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("revSortDir", sortDir.equals("asc") ? "desc" : "asc");
         return model;
+    }
+
+    public static String getUserNameFromSecurity() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userName;
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails) principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
     }
 
 }
