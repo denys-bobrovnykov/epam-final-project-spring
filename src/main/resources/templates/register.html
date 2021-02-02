@@ -13,9 +13,9 @@
                 <h2 class="container" th:text="#{title.registration}">Registration</h2>
 
                 <form th:action="@{/register}" method="post" th:object="${userDTO}">
-                    <th:block th:if="${#fields.hasErrors()}" th:each="err : ${#fields.errors()}">
+                    <th:block th:if="${#fields.hasErrors()}" th:each="error : ${#fields.errors()}">
                         <div class="alert alert-warning alert-dismissible fade show" role="alert" >
-                            <p th:utext="#{${err}}"></p>
+                            <p th:utext="#{${error}}"></p>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </th:block>

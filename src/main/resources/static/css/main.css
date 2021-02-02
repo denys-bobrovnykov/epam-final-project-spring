@@ -1,15 +1,68 @@
+body {
+    background-color: #CCE0F0;
+    color: #0B3557;
+}
+
 /* Header */
 header {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     align-content: center;
-    height: 60px;
-    background-color: cadetblue;
+    min-height: 80px;
+    background-color: #21445C;
     padding: 20px;
+    color: #CCE0F0;
+    box-shadow: 0px 5px 9px 0px #000000;
 }
+/* Schedule title effects */
+.marked {
+    border-bottom: 5px solid #CCE0F0;
+}
+
+.marked:hover {
+    color: #CCE0F0;
+}
+.marked {
+    transition: border-bottom 300ms;
+}
+
+.unmarked:hover {
+    color: #1C82D6;
+}
+
+.admin-access {
+    display: flex;
+    justify-content: center;
+}
+
+header button {
+    color: #CCE0F0;
+}
+
+.link-to-home {
+    font-size: 2rem;
+    color: #CCE0F0;
+}
+.admin-menu {
+    border-left: 2px solid #0B3557;
+    border-right: 2px solid #0B3557;
+    background: coral;
+}
+
+.admin-menu a {
+    color: #CCE0F0;
+}
+.logout-button {
+    color: #CCE0F0;
+}
+.logout-button:hover {
+    color: #1C82D6;
+}
+
 header .language-badge-container {
     display: flex;
+    border-left: 2px solid #0B3557;
 }
 header .language-badge-container p {
     margin-bottom: 0;
@@ -39,6 +92,47 @@ main {
     margin-bottom: 100px;
 }
 
+main table {
+    -webkit-box-shadow: 0px 0px 15px 10px rgba(0,0,0,0.6);
+    box-shadow: 0px 0px 15px 10px rgba(0,0,0,0.6);
+    margin-top: 60px;
+    background-color: aliceblue;
+}
+
+main table a {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+main table td > a {
+    color: black;
+}
+
+main table a {
+
+}
+.create-section {
+}
+.create-session-container {
+    margin: 5px;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #8A6225;
+    color: #CCE0F0;
+    -webkit-box-shadow: inset 0px 0px 2px 5px rgba(0,0,0,0.3);
+    box-shadow: inset 0px 0px 2px 5px rgba(0,0,0,0.3);
+}
+
+.create-movie-container {
+    margin: 5px;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #8A6225;
+    color: #CCE0F0;
+    -webkit-box-shadow: inset 0px 0px 2px 5px rgba(0,0,0,0.3);
+    box-shadow: inset 0px 0px 2px 5px rgba(0,0,0,0.3);
+}
+
 .schedule-section {
     min-height: 60vh;
 }
@@ -50,5 +144,5 @@ main {
 /* Footer */
 footer {
     height: 60px;
-    background-color: cadetblue;
+    background-color: #21445C;
 }

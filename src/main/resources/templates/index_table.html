@@ -24,6 +24,12 @@
                             th:href="@{/home/details/{id}(id=${row.getId()})}"
                             th:utext="${#locale.getLanguage() == 'en' ? row.getMovie().getTitleEn() : row.getMovie().getTitleUa()}"></a></td>
                     <td th:utext="${row.getSeatsAvail()}">FreeSeats</td>
+                    <td sec:authorize="hasAuthority('ADMIN')">
+                        <form action="#" th:action="@{/admin/sessions/{id}(id=${row.getId()})}" method="post">
+                            <input th:type="hidden" name="_method" value="DELETE">
+                            <input type="submit" th:value="#{remove}">
+                        </form>
+                    </td>
                 </tr>
             </th:block>
             </tbody>

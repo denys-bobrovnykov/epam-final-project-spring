@@ -11,8 +11,8 @@
 <header th:replace="fragments/layout :: header"/>
 
 <main class="container">
-    <div class="day-container container mb-5">
-        <h2 th:text="#{go.admin}">Admin page</h2>
+    <div class="day-container container my-5 row d-flex justify-content-center">
+        <h2 class="d-flex justify-content-center" th:text="#{go.admin}">Admin page</h2>
     </div>
     <p th:text="${param.message} ? ${param.message} : ''"></p>
     <div class="container errors-container">
@@ -24,114 +24,105 @@
         </th:block>
     </div>
     <!--    Display all sessions    -->
-    <div class="container mb-5">
-        <h3 th:text="#{sessions.header}">All Sessions</h3>
-        <div class="schedule-admin">
-            <table class="table align-middle table-striped">
-                <thead th:replace="/fragments/table_header :: table_header">
-                </thead>
-                <tbody class="text-center">
-                <th:block th:each="row : ${rows}">
-                    <tr>
-                        <th scope="row" th:utext="${row.getDayOfSession()}">Date</th>
-                        <td th:utext="#{${'day-' + row.getDayOfSession().getDayOfWeek().getValue() + '-pag'}}">Day</td>
-                        <td th:utext="${row.getTimeStart()}">Time</td>
-                        <td><a th:href="@{/home/details/{id}(id=${row.getId()})}"
-                               th:utext="${#locale.getLanguage() == 'en' ? row.getMovie().getTitleEn() : row.getMovie().getTitleUa()}"></a></td>
-                        <td th:utext="${row.getSeatsAvail()}">FreeSeats</td>
-                        <td>
-                            <form action="#" th:action="@{/admin/sessions/{id}(id=${row.getId()})}" method="post">
-                                <input th:type="hidden" name="_method" value="DELETE">
-                                <input type="submit" th:value="#{remove}">
-                            </form>
-                        </td>
-                    </tr>
-                </th:block>
-                </tbody>
-            </table>
-        </div>
-        <div th:replace="fragments/layout :: pagination" />
-    </div>
-    <div class="container mb-5">
-        <p>
-        <button class="btn btn-primary"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapseSession"
-                aria-expanded="false"
-                aria-controls="collapseExample"
-                th:text="#{create.session}">
-            Create session
-        </button>
-        </p>
-        <form class="collapse" id="collapseSession" th:action="@{/admin/sessions}" method="post">
-            <!--    Add session -->
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupSelect01" th:text="#{option.day}">Day</label>
-                <input type="date" id="inputGroupSelect01" name="dayOfSession">
+<!--    <div class="container mb-5">-->
+<!--        <h3 th:text="#{sessions.header}">All Sessions</h3>-->
+<!--        <div class="schedule-admin">-->
+<!--            <table class="table align-middle table-striped">-->
+<!--                <thead th:replace="/fragments/table_header :: table_header">-->
+<!--                </thead>-->
+<!--                <tbody class="text-center">-->
+<!--                <th:block th:each="row : ${rows}">-->
+<!--                    <tr>-->
+<!--                        <th scope="row" th:utext="${row.getDayOfSession()}">Date</th>-->
+<!--                        <td th:utext="#{${'day-' + row.getDayOfSession().getDayOfWeek().getValue() + '-pag'}}">Day</td>-->
+<!--                        <td th:utext="${row.getTimeStart()}">Time</td>-->
+<!--                        <td><a th:href="@{/home/details/{id}(id=${row.getId()})}"-->
+<!--                               th:utext="${#locale.getLanguage() == 'en' ? row.getMovie().getTitleEn() : row.getMovie().getTitleUa()}"></a></td>-->
+<!--                        <td th:utext="${row.getSeatsAvail()}">FreeSeats</td>-->
+<!--                        <td>-->
+<!--                            <form action="#" th:action="@{/admin/sessions/{id}(id=${row.getId()})}" method="post">-->
+<!--                                <input th:type="hidden" name="_method" value="DELETE">-->
+<!--                                <input type="submit" th:value="#{remove}">-->
+<!--                            </form>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                </th:block>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--        <div th:replace="fragments/layout :: pagination" />-->
+<!--    </div>-->
+    <div class="row create-section">
+        <div class="container col mb-5 create-session-container align-content-center">
+            <div class="row">
+                <h5>Create session</h5>
             </div>
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupSelect02" th:text="#{option.time}">Time start</label>
-                <select class="form-select" id="inputGroupSelect02" name="timeStart">
-                    <!--                    Generate from db all available start times -->
-                    <th:block th:each="i : ${#numbers.sequence(9, 22)}">
-                        <option th:value="${(i < 10 ? '0' + i : i) + ':00:00'}" th:text="${i + ':00'}">10:00</option>
-                    </th:block>
-                </select>
-            </div>
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupSelect03" th:text="#{option.movie}">Movie</label>
-                <select class="form-select" id="inputGroupSelect03" name="movie">
-                    <!--                    Generate from db all available movies -->
-                    <th:block th:each="movie : ${movies}">
-                        <option th:value="${movie.getId()}"
-                                th:text="${(#locale.getLanguage() == 'en') ? movie.getTitleEn() : movie.getTitleUa()}"></option>
-                    </th:block>
-                </select>
-            </div>
-            <input class="btn btn-success" type="submit" th:value="#{add.session}">
-        </form>
+            <form class="col" th:action="@{/admin/sessions}" method="post">
+                <!--    Add session -->
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01" th:text="#{option.day}">Day</label>
+                    <input type="date" id="inputGroupSelect01" name="dayOfSession">
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect02" th:text="#{option.time}">Time start</label>
+                    <select class="form-select" id="inputGroupSelect02" name="timeStart">
+                        <!--                    Generate from db all available start times -->
+                        <th:block th:each="i : ${#numbers.sequence(9, 22)}">
+                            <option th:value="${(i < 10 ? '0' + i : i) + ':00:00'}" th:text="${i + ':00'}">10:00</option>
+                        </th:block>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect03" th:text="#{option.movie}">Movie</label>
+                    <select class="form-select" id="inputGroupSelect03" name="movie">
+                        <!--                    Generate from db all available movies -->
+                        <th:block th:each="movie : ${movies}">
+                            <option th:value="${movie.getId()}"
+                                    th:text="${(#locale.getLanguage() == 'en') ? movie.getTitleEn() : movie.getTitleUa()}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <input class="btn btn-success w-100" type="submit" th:value="#{add.session}">
+            </form>
 
+        </div>
+        <div class="container col mb-5 create-movie-container">
+            <div class="row">
+                <h5>Add movie</h5>
+            </div>
+            <div class="row">
+                <form class="col" th:action="@{/admin/movies}" method="post">
+                    <!--    Add movie   -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" th:text="#{title.en}">Title EN</span>
+                        <input
+                                type="text"
+                                name="titleEn"
+                                class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" th:text="#{title.ua}">Title UA</span>
+                        <input type="text"  name="titleUa" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" th:text="#{release.year}">Release year</span>
+                        <input type="text" name="releaseYear" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" th:text="#{running.time}">Running time</span>
+                        <input type="text" name="runningTime" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" th:text="#{poster.file}">Poster file name</span>
+                        <input type="text" name="poster" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <input class="btn btn-success w-100" type="submit" th:value="#{add.button}">
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="container mb-5">
-        <p>
-            <button class="btn btn-primary"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseMovie"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
-                    th:text="#{create.movie}">
-                Add movie
-            </button>
-        </p>
-        <form class="collapse" id="collapseMovie" th:action="@{/admin/movies}" method="post">
-            <!--    Add movie   -->
-            <div class="input-group mb-3">
-                <span class="input-group-text" th:text="#{title.en}">Title EN</span>
-                <input
-                        type="text"
-                        name="titleEn"
-                        class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text" th:text="#{title.ua}">Title UA</span>
-                <input type="text"  name="titleUa" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text" th:text="#{release.year}">Release year</span>
-                <input type="text" name="releaseYear" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text" th:text="#{running.time}">Running time</span>
-                <input type="text" name="runningTime" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text" th:text="#{poster.file}">Poster file name</span>
-                <input type="text" name="poster" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-            </div>
-            <input class="btn btn-success" type="submit" th:value="#{add.button}">
-        </form>
+    <div class="row">
+        Statistics
     </div>
 
 </main>
