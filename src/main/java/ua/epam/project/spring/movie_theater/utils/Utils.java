@@ -7,11 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import ua.epam.project.spring.movie_theater.entities.MovieSession;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import static ua.epam.project.spring.movie_theater.config.Constants.DEFAULT_SORT;
 import static ua.epam.project.spring.movie_theater.config.Constants.PAGE_SIZE;
 
 public class Utils {
@@ -35,13 +31,14 @@ public class Utils {
                 Sort.by(sortField.split(",")).descending();
     }
 
-    public static Model setModelParams(Integer page, String sortParam, String sortDir, Model model, Page<MovieSession> tablePage) {
+    public static Model setModelParams(Integer page, String sortParam, String sortDir, Model model, Page<MovieSession> tablePage, String keyword) {
         model.addAttribute("current_page", page);
         model.addAttribute("pages", tablePage.getTotalPages());
         model.addAttribute("rows", tablePage);
         model.addAttribute("sortParam", sortParam);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("revSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("search", keyword == null ? "" : keyword);
         return model;
     }
 

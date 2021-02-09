@@ -16,7 +16,6 @@
 <!--   HEADER    -->
 <header th:fragment="header" class="row">
     <div class="col">
-        <div th:if="${success}">Successful please login.</div>
     </div>
     <div class="container d-flex justify-content-center col-md schedule-link">
         <a class="link-to-home" href="/home" th:classappend="${#httpServletRequest.getRequestURI() == '/home' ? 'marked' : 'unmarked'}" th:text="#{go.home}">Home page</a>
@@ -64,19 +63,19 @@
         <ul class="pagination justify-content-center">
             <li class="page-item">
                 <a class="page-link"
-                   th:href="@{'?page=' + ${current_page > 0 ? current_page - 1 : 0}}" aria-label="Previous">
+                   th:href="@{'?page=' + ${current_page > 0 ? current_page - 1 : 0} + '&sort=' + ${sortParam} + '&sortDir=' + ${sortDir} + '&search=' + ${search}}" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <th:block th:if="${pages > 0}" th:each="page : ${#numbers.sequence(0, pages - 1)}">
                 <li class="page-item" th:classappend="${current_page == page ? 'active' : ''}">
                     <a class="page-link"
-                       th:href="@{'?page=' + ${page} + '&sort=' + ${sortParam} + '&sortDir=' + ${sortDir}}" th:text="${page + 1}">1</a>
+                       th:href="@{'?page=' + ${page} + '&sort=' + ${sortParam} + '&sortDir=' + ${sortDir} + '&search=' + ${search}} " th:text="${page + 1}">1</a>
                 </li>
             </th:block>
             <li class="page-item">
                 <a class="page-link"
-                   th:href="@{'?page=' + ${current_page < pages - 1 ? current_page + 1 : pages - 1}}" aria-label="Next">
+                   th:href="@{'?page=' + ${current_page < pages - 1 ? current_page + 1 : pages - 1}+ '&sort=' + ${sortParam} + '&sortDir=' + ${sortDir} + '&search=' + ${search}}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

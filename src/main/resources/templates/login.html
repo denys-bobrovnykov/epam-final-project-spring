@@ -11,33 +11,26 @@
 <main class="d-flex justify-content-center container sm-5 my-5">
     <div class="col-6 justify-items-center">
         <h2 class="container" th:text="#{title.login}">Login</h2>
-        <form th:action="@{/login}" method="post" th:object="${userDTO}">
+        <form th:action="@{/login}" method="post">
             <div th:if="${param.error}" class="alert alert-warning alert-dismissible fade show" role="alert" >
                 <p th:text="#{error.login}"></p>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <th:block th:if="${#fields.hasErrors()}" th:each="err : ${#fields.errors()}">
-                <div class="alert alert-warning alert-dismissible fade show" role="alert" >
-                    <p th:utext="#{${err}}"></p>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </th:block>
             <div th:if="${error}" class="alert alert-warning alert-dismissible fade show" role="alert" >
                 <p th:text="#{${error.getMessage()}}"></p>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <div class="mb-3">
                 <label for="ControlInput1" class="form-label" th:text="#{field.email}">Email address</label>
-                <input type="email" th:field="*{email}" class="form-control" id="ControlInput1" name="email">
+                <input type="email"  class="form-control" id="ControlInput1" name="email">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput2" class="form-label" th:text="#{field.password}">Password</label>
-                <input type="password" th:field="*{password}" class="form-control" id="exampleFormControlInput2" name="password">
+                <input type="password"  class="form-control" id="exampleFormControlInput2" name="password">
             </div>
             <div>
                 <input class="btn btn-primary" type="submit" th:value="#{sign.in}"/>
-                <a href="/home" th:text="#{go.home}">Home page</a>
-                <a href="/register" >Register</a>
+                <a href="/register" th:text="#{title.registration}">Register</a>
             </div>
         </form>
 

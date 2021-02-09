@@ -25,7 +25,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="ControlInput1" class="form-label" th:text="#{field.email}">Email address</label>
-                        <input type="email"
+                        <input type="text"
                                th:field="*{email}"
                                th:value="${emailRedirect}"
                                class="form-control" id="ControlInput1" name="email">
@@ -35,8 +35,7 @@
                         <input type="password" th:field="*{password}" class="form-control" id="exampleFormControlInput2" name="password">
                     </div>
                     <div>
-                        <input type="submit" th:value="#{sign.up}"/>
-                        <a href="/home" th:text="#{go.home}">Home page</a>
+                        <input class="btn btn-primary" type="submit" th:value="#{sign.up}"/>
                     </div>
                 </form>
 

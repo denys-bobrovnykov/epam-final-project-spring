@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ua.epam.project.spring.movie_theater.dto.StatsDTO;
 import ua.epam.project.spring.movie_theater.exceptions.DBexception;
 import ua.epam.project.spring.movie_theater.message.MessageFactory;
 import ua.epam.project.spring.movie_theater.services.MovieService;
@@ -40,14 +41,15 @@ public class AdminController {
     public String adminPage(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
                             @RequestParam(value = "sort", required = false, defaultValue = DEFAULT_SORT) String sortParam,
                             @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir,
+                            @RequestParam(value = "filterBy", required = false) String filterParam,
+                            @RequestParam(value = "sort", required = false) String keyword,
+                            StatsDTO statsDTO,
+                            SessionDTO sessionDTO,
+                            MovieDTO movie,
                             Model model) {
-        // Sessions
-        Page<MovieSession> tablePage = sessionService.getPage(sortParam, sortDir, setValueToZeroIfNotProvidedOrNegative(page));
-        setModelParams(page, sortParam, sortDir, model, tablePage);
-        // Movies
-        List<Movie> movieList;
-        movieList = movieService.getAllMovies();
-        model.addAttribute("movies", movieList);
+        Page<MovieSession> tablePage = sessionService.getPage(sortParam, sortDir, setValueToZeroIfNotProvidedOrNegative(page), filterParam);
+        setModelParams(page, sortParam, sortDir, model, tablePage, keyword);
+        model.addAttribute("movies", movieService.getAllMovies());
         return "adminPage";
     }
 
@@ -58,11 +60,11 @@ public class AdminController {
             return handleRedirectOnValidation(bindingResult, redirectAttributes);
         }
         try {
-            sessionService.saveSession(sessionDTO);
+            redirectAttributes.addFlashAttribute("successSession", sessionService.saveSession(sessionDTO));
         } catch (DBexception dBexception) {
             return handleException(redirectAttributes, dBexception);
         }
-        redirectAttributes.addFlashAttribute("success", MessageFactory.getMessage("session created"));
+        logger.info("Session created: {}", sessionDTO);
         return "redirect:/admin";
     }
 
@@ -73,11 +75,11 @@ public class AdminController {
             return handleRedirectOnValidation(bindingResult, redirectAttributes);
         }
         try {
-            movieService.saveNewMovie(movie);
+            redirectAttributes.addFlashAttribute("successMovie", movieService.saveNewMovie(movie));
+            logger.info("Movie created: {}", movie);
         } catch (DBexception dBexception) {
             return handleException(redirectAttributes, dBexception);
         }
-        redirectAttributes.addFlashAttribute("success", MessageFactory.getMessage("success.movie.created"));
             return "redirect:/admin";
     }
 
@@ -88,7 +90,23 @@ public class AdminController {
         } catch (DBexception dBexception) {
             return handleException(redirectAttributes, dBexception);
         }
+        logger.info("Session deleted id: {}", id);
         redirectAttributes.addFlashAttribute("success", MessageFactory.getMessage("success.session.deleted"));
+        return "redirect:/home";
+    }
+
+    @GetMapping("/admin/stats")
+    public String showStatistics(@Valid StatsDTO statsDTO, BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+           return  handleRedirectOnValidation(bindingResult, redirectAttributes);
+        }
+        try {
+            redirectAttributes.addFlashAttribute("stats", sessionService.getStats(statsDTO));
+            redirectAttributes.addFlashAttribute("period", statsDTO);
+        } catch (DBexception ex) {
+            handleException(redirectAttributes, ex);
+        }
         return "redirect:/admin";
     }
 

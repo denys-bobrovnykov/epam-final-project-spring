@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.epam.project.spring.movie_theater.entities.MovieSession;
-import ua.epam.project.spring.movie_theater.services.SeatService;
 import ua.epam.project.spring.movie_theater.services.MovieSessionService;
 
 
@@ -28,9 +27,11 @@ public class HomeController {
     public String homeTableView(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
                                 @RequestParam(value = "sort", required = false, defaultValue = DEFAULT_SORT) String sortParam,
                                 @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir,
+                                @RequestParam(value = "search", required = false) String keyword,
                                 Model model) {
-        Page<MovieSession> tablePage = sessionService.getPage(sortParam, sortDir, setValueToZeroIfNotProvidedOrNegative(page));
-        setModelParams(page, sortParam, sortDir, model, tablePage);
+        Page<MovieSession> tablePage = sessionService.getPage(sortParam,
+                sortDir, setValueToZeroIfNotProvidedOrNegative(page), keyword);
+        setModelParams(page, sortParam, sortDir, model, tablePage, keyword);
         return "index_table";
     }
 

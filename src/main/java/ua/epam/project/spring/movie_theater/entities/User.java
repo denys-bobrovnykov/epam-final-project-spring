@@ -10,18 +10,30 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+//    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+//    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+//    private Set<Role> roles;
+    @Column(nullable = false)
+    private Role role;
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
     private String password;
     @Column(name="enabled", nullable = false)
     private boolean enabled;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @OneToMany(mappedBy = "user")
+
+
     private Set<Ticket> userTickets = new HashSet<>();
 
     public Set<Ticket> getUserTickets() {
@@ -32,9 +44,6 @@ public class User {
         this.userTickets = userTickets;
     }
 
-    public User() {
-    }
-
     public boolean isEnabled() {
         return enabled;
     }
@@ -43,13 +52,13 @@ public class User {
         this.enabled = enabled;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
+//    public Set<Role> getRoles() {
+//        return roles;
+//    }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+//    public void setRoles(Set<Role> roles) {
+//        this.roles = roles;
+//    }
 
     public String getEmail() {
         return email;
@@ -78,18 +87,21 @@ public class User {
         return new UserBuilder();
     }
 
+    public User(){}
+
     private User(UserBuilder builder) {
         this.email = builder.email;
         this.password = builder.password;
         this.enabled = builder.enabled;
-        this.roles = builder.roles;
+//        this.roles = builder.roles;
     }
 
     public static class UserBuilder {
         private String email;
         private String password;
         private Boolean enabled;
-        private Set<Role> roles = new HashSet<>();
+//        private Set<Role> roles = new HashSet<>();
+        private Role role;
 
         public User build() {
             return new User(this);
@@ -107,8 +119,8 @@ public class User {
             this.enabled = isEnabled;
             return this;
         }
-        public UserBuilder role(Set<Role> role) {
-            this.roles = role;
+        public UserBuilder role(Role role) {
+            this.role = role;
             return this;
         }
 

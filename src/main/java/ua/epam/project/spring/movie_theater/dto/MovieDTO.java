@@ -1,24 +1,21 @@
 package ua.epam.project.spring.movie_theater.dto;
 
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 import static ua.epam.project.spring.movie_theater.config.Constants.FILE_REGEX;
 
 public class MovieDTO {
-    @Size(max = 36)
+    @NotBlank(message = "error.empty.title.ua")
+    @Size(max = 36, message = "title.max")
     private String titleUa;
-    @Size(max = 36)
+    @NotBlank(message = "error.empty.title.en")
     private String titleEn;
-    @Min(1900)@Max(9999)
+    @NotNull(message = "error.empty.release.year")
     private int releaseYear;
-    @Min(0)@Max(999)
+    @NotNull(message = "error.empty.release.year")
     private int runningTime;
-    @Size(max = 255)
-    @Pattern(regexp = FILE_REGEX, message = "error.field.valid.file.poster.ua")
+    @Pattern(regexp = FILE_REGEX, message = "error.field.valid.file.poster")
     private String poster;
 
     public MovieDTO(){}

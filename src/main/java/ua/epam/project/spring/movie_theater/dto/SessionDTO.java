@@ -13,14 +13,15 @@ import java.time.LocalTime;
 import java.util.Set;
 
 public class SessionDTO {
-    @NotNull
+    @NotNull(message = "must.be.present.date")
     @FutureOrPresent(message = "alert.field.past.today")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dayOfSession;
-    @NotNull
+    @NotNull(message = "must.be.present.time")
     @DateTimeFormat(pattern = "kk:mm:ss")
     @StartTimeConstraint(message = "error.field.start.time")
     private LocalTime timeStart;
+    @NotNull(message = "must.be.present.movie")
     private Movie movie;
     private Set<Seat> seats;
     private int seatsBought;

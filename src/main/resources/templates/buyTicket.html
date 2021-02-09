@@ -13,7 +13,7 @@
     <div class="row mt-5">
         <div class="col">
             <div class="d-flex justify-content-center border border-dark w-100 mb-5">
-                <p class="h-10 mb-0">Screen</p>
+                <p class="h-10 mb-0" th:text="#{screen}">Screen</p>
             </div>
             <div class="d-flex justify-content-center">
                 <form  class="d-flex flex-column justify-content-center" th:action="@{/buy/{sessionId}(sessionId=${selectedSession.getId()})}" method="post">
@@ -41,24 +41,32 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <div th:if="${seats}">
-                <p>Your tickets</p>
+                <p th:text="#{your.tickets}">Your tickets</p>
                 <div>
                     <th:block th:each="seat, i : ${seats}">
-                        <div>
-                            <p th:utext="${'Ticket # ' + i.index + 1}"></p>
-                            <p th:utext="${'row - ' + seat.getSeatRow()}"></p>
-                            <p th:utext="${'number - ' + seat.getSeatNumber()}"></p>
+                        <div class="alert alert-dark" role="alert">
+                            <p>
+                                <span th:utext="#{ticket}" /><span th:utext="${' # ' + (i.index + 1)}"/>
+                            </p>
+                            <p>
+                                <span th:utext="#{seat.row}" /><span th:utext="${' - ' + seat.getSeatRow()}"/>
+
+                            </p>
+                            <p>
+                                <span th:utext="#{seat.number}" /><span th:utext="${' - ' + seat.getSeatNumber()}"/>
+
+                            </p>
                         </div>
                     </th:block>
                 </div>
-                <a href="/home" class="btn btn-primary">Go back to schedule</a>
+                <a href="/home" class="btn btn-primary" th:text="#{go.home}">Go back to schedule</a>
             </div>
         </div>
         <div class="col d-flex flex-column justify-content-start align-items-center">
             <div>
                 <h5 th:text="${#locale.getLanguage() == 'en' ? selectedSession.getMovie().getTitleEn() : selectedSession.getMovie().getTitleUa()}" />
                 <p class="card-text" th:text="${selectedSession.getDayOfSession().getMonthValue() + '/' + selectedSession.getDayOfSession().getDayOfMonth()}"/>
-                <p class="card-text" th:text="${selectedSession.getDayOfSession().getDayOfWeek()}"/>
+                <p class="card-text" th:text="#{'day-' + ${selectedSession.getDayOfSession().getDayOfWeek().getValue()}}"/>
                 <p class="card-text" th:text="${selectedSession.getMovie().getReleaseYear()}"/>
                 <p class="card-text" th:text="#{time.start}">Time start</p>
                 <p class="card-text" th:text="${selectedSession.getTimeStart()}"/>

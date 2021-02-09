@@ -104,12 +104,17 @@ main table a {
     color: whitesmoke;
 }
 
-main table td > a {
-    color: black;
+.table-data-title {
+    width: 15rem;
 }
 
-main table a:hover {
-    letter-spacing: 0.5px;
+main table td > a {
+    color: black;
+    font-weight: bold;
+}
+
+main table td > a:hover {
+    font-weight: normal;
 }
 .create-section {
 }

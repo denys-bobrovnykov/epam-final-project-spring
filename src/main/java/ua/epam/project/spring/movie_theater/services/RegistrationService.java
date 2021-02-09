@@ -30,14 +30,13 @@ public class RegistrationService {
                 .email(userDTO.getEmail())
                 .password(encodedPassword)
                 .enabled(true)
-                .role(Collections.singleton(Role.USER))
+//                .role(Collections.singleton(Role.USER))
+                .role(Role.USER)
                 .build());
     }
 
-    private void chekIfUserExists(UserDTO userDTO) throws DBexception{
-        User userFromDb = userRepository.findUserByEmail(userDTO.getEmail()).orElse(null);
-        if (userFromDb != null) {
-            throw new DBexception("error.register.exists");
-        }
+    private User chekIfUserExists(UserDTO userDTO) throws DBexception{
+       return userRepository.findUserByEmail(userDTO.getEmail())
+               .orElseThrow(() -> new DBexception("error.register.exists"));
     }
 }

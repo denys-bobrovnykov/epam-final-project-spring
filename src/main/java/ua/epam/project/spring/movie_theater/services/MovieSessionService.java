@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.epam.project.spring.movie_theater.dto.SessionDTO;
+import ua.epam.project.spring.movie_theater.dto.StatsDTO;
 import ua.epam.project.spring.movie_theater.entities.MovieSession;
 import ua.epam.project.spring.movie_theater.exceptions.DBexception;
 import ua.epam.project.spring.movie_theater.repositories.MovieSessionRepository;
@@ -38,14 +39,19 @@ public class MovieSessionService {
     }
 
 
-    public Page<MovieSession> getPage(String sort, String sortDir, Integer page) {
+    public Page<MovieSession> getPage(String sort, String sortDir, Integer page, String keyword) {
         Sort orders = getOrdersFromQueryParams(sort, sortDir);
         Pageable pageRequest = PageRequest.of(page, PAGE_SIZE, orders);
+        if (keyword != null) {
+            return movieSessionRepository.findAll(keyword, pageRequest);
+        }
         return movieSessionRepository.findAll(pageRequest);
     }
 
     @Transactional
     public MovieSession saveSession(SessionDTO session) throws DBexception {
+        // TODO
+        // Remove find session
         MovieSession sessionFromDb = getSessionByDayTime(session.getDayOfSession(), session.getTimeStart());
         if (sessionFromDb != null) {
             throw new DBexception("error.session.exists");
@@ -70,5 +76,16 @@ public class MovieSessionService {
             logger.error("Could not delete session", ex);
         }
         return true;
+    }
+
+    public Long getStats(StatsDTO statsDTO) throws DBexception {
+        Long daysCount = Math.abs(statsDTO.getDayEnd().toEpochDay() - statsDTO.getDayStart().toEpochDay());
+        try {
+            return  daysCount == 0
+                    ? movieSessionRepository.countAllSeatsBought(statsDTO.getDayStart(), statsDTO.getDayEnd())
+                    : movieSessionRepository.countAllSeatsBought(statsDTO.getDayStart(), statsDTO.getDayEnd()) / daysCount;
+        } catch (Exception ex) {
+            throw new DBexception("Could not get stats from db", ex);
+        }
     }
 }

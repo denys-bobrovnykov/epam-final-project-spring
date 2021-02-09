@@ -48,7 +48,7 @@ public class RegistrationController {
             redirectAttributes.addFlashAttribute("emailRedirect", userDTO.getEmail());
             return "redirect:/register";
         }
-        redirectAttributes.addFlashAttribute("success", MessageFactory.getMessage("success.register"));
+        redirectAttributes.addFlashAttribute("regSuccess", MessageFactory.getMessage("success.register"));
         return "redirect:/home";
     }
 

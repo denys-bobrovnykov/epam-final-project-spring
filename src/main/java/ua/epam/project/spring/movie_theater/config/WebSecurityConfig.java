@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                     .antMatchers("/","/login","/home/**", "/register", "/seats").permitAll()
-                    .antMatchers("/admin/**").access("hasAuthority('ADMIN')")
+                    .antMatchers("/admin/**", "/stats").access("hasAuthority('ADMIN')")
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
@@ -53,7 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .dataSource(dataSource)
             .passwordEncoder(passwordEncoder())
             .usersByUsernameQuery("select email, password, enabled from user where email = ?")
-            .authoritiesByUsernameQuery("select user.email, user_role.roles from user join user_role on user_role.user_id = user.id where user.email = ?");
+            .authoritiesByUsernameQuery("select email, role from user where email = ?");
+//            .authoritiesByUsernameQuery("select user.email, user_role.roles from user join user_role on user_role.user_id = user.id where user.email = ?");
     }
 
 

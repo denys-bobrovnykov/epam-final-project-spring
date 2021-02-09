@@ -11,20 +11,33 @@
 
 <main class="container">
     <div class="row my-5">
-        <h2>Personal cabinet</h2>
+        <h2 th:text="#{personal.cabinet}">Personal cabinet</h2>
     </div>
     <div class="row my-5">
         <div class="col">
-            <p>Logged user: <span sec:authentication="name">Bob</span></p>
+            <h4><span sec:authentication="name">Bob</span></h4>
         </div>
         <div class="col">
-            <h4 class="row">Your tickets</h4>
+            <h4 class="row" th:text="#{your.tickets}">Your tickets</h4>
             <div>
                 <th:block th:each="ticket : ${tickets}">
-                    <p th:utext="${ticket.getId() + ' ' +
-                    ticket.getMovieSession().getMovieTitleEn() + ' ' +
-                    ticket.getMovieSession().getTimeStart() + ' ' +
-                    ticket.getMovieSession().getDayOfSession()}"></p>
+                    <div class="alert alert-dark" role="alert">
+                        <p>
+                           <span th:utext="${#locale.getLanguage() == 'en' ? ticket.getMovieSession().getMovie().getTitleEn() : ticket.getMovieSession().getMovie().getTitleUa()}"/>
+                        </p>
+                        <p>
+                            <span th:utext="#{'day-' + ${ticket.getMovieSession().getDayOfSession().getDayOfWeek().getValue()}}" />
+                        </p>
+                        <p>
+                            <span th:utext="${ticket.getMovieSession().getTimeStart()}" />
+                        </p>
+                        <p>
+                            <span th:utext="#{seat.row}" /><span th:utext="${' - ' + ticket.getSeat().getSeatRow()}"/>
+                        </p>
+                        <p>
+                            <span th:utext="#{seat.number}" /><span th:utext="${' - ' + ticket.getSeat().getSeatNumber()}"/>
+                        </p>
+                    </div>
                 </th:block>
             </div>
         </div>
