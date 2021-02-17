@@ -14,7 +14,6 @@ import java.time.LocalTime;
 import java.util.Set;
 
 public class SessionDTO implements Serializable {
-    Integer id;
     @NotNull(message = "must.be.present.date")
     @FutureOrPresent(message = "alert.field.past.today")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -33,17 +32,6 @@ public class SessionDTO implements Serializable {
     public SessionDTO() {
     }
 
-    public SessionDTO(Integer id,
-                      @NotNull(message = "must.be.present.date") @FutureOrPresent(message = "alert.field.past.today") LocalDate dayOfSession,
-                      @NotNull(message = "must.be.present.time") LocalTime timeStart,
-                      long seatsBought, String movieTitleEn, String movieTitleUa) {
-        this.id = id;
-        this.dayOfSession = dayOfSession;
-        this.timeStart = timeStart;
-        this.seatsBought = seatsBought;
-        this.movieTitleEn = movieTitleEn;
-        this.movieTitleUa = movieTitleUa;
-    }
 
     public String getMovieTitleEn() {
         return movieTitleEn;

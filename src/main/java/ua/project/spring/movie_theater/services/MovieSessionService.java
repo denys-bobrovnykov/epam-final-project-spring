@@ -50,12 +50,6 @@ public class MovieSessionService {
 
     @Transactional
     public MovieSession saveSession(SessionDTO session) throws DBexception {
-        // TODO
-        // Remove find session
-        MovieSession sessionFromDb = getSessionByDayTime(session.getDayOfSession(), session.getTimeStart());
-        if (sessionFromDb != null) {
-            throw new DBexception("error.session.exists");
-        }
         return movieSessionRepository.save(MovieSession.sessionBuilder()
                 .dayOfWeek(session.getDayOfSession())
                 .timeStart(session.getTimeStart())
@@ -66,14 +60,11 @@ public class MovieSessionService {
 
     @Transactional
     public boolean deleteSession(Integer id) throws DBexception {
-        MovieSession sessionFromDB = movieSessionRepository.findById(id).orElse(null);
-        if (sessionFromDB == null) {
-            throw new DBexception("error.session.not.exist");
-        }
         try {
             movieSessionRepository.deleteById(id);
         } catch (Exception ex) {
             logger.error("Could not delete session", ex);
+            throw new DBexception("error.session.not.exist");
         }
         return true;
     }

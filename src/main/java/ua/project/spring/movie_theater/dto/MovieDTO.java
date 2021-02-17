@@ -20,6 +20,14 @@ public class MovieDTO {
 
     public MovieDTO(){}
 
+    public MovieDTO(@NotBlank(message = "error.empty.title.ua") @Size(max = 36, message = "title.max") String titleUa, @NotBlank(message = "error.empty.title.en") String titleEn, @NotNull(message = "error.empty.release.year") int releaseYear, @NotNull(message = "error.empty.release.year") int runningTime, @Pattern(regexp = FILE_REGEX, message = "error.field.valid.file.poster") String poster) {
+        this.titleUa = titleUa;
+        this.titleEn = titleEn;
+        this.releaseYear = releaseYear;
+        this.runningTime = runningTime;
+        this.poster = poster;
+    }
+
     public String getTitleUa() {
         return titleUa;
     }
