@@ -5,7 +5,7 @@
            th:text="#{date}"></a></th>
     <th scope="col"><span th:text="#{weekday}"/></th>
     <th scope="col"><a th:href="@{'?sort=timeStart&sortDir=' + ${revSortDir} + '&page=' + ${current_page} + '&search=' + ${search}}" th:text="#{time.start}"/></th>
-    <th scope="col"><a th:href="@{'?sort=movieTitle' + #{title.language} + '&sortDir=' + ${revSortDir} +'&page=' + ${current_page} + '&search=' + ${search}}" th:text="#{movie.title}"></a></th>
+    <th scope="col"><a th:href="@{'?sort=movie.title' + #{title.language} + '&sortDir=' + ${revSortDir} +'&page=' + ${current_page} + '&search=' + ${search}}" th:text="#{movie.title}"></a></th>
     <th scope="col"><a th:href="@{'?sort=seatsAvail&sortDir=' + ${revSortDir} + '&page=' + ${current_page} + '&search=' + ${search}}" th:text="#{free.seats}"></a></th>
     <th scope="col" sec:authorize="hasAuthority('ADMIN')"><span  th:text="#{free.seats}"></span></th>
 </tr>

@@ -29,26 +29,10 @@ public class MovieSession {
     private Movie movie;
     @Column(name = "seats_available", columnDefinition = "INT NOT NULL DEFAULT 0")
     private Integer seatsAvail;
-    @Column(name="movie_title_en")
-    private String movieTitleEn;
-    @Column(name="movie_title_ua")
-    private String movieTitleUa;
-
-    public String getMovieTitleEn() {
-        return movieTitleEn;
-    }
-
-    public void setMovieTitleEn(String movieTitleEn) {
-        this.movieTitleEn = movieTitleEn;
-    }
-
-    public String getMovieTitleUa() {
-        return movieTitleUa;
-    }
-
-    public void setMovieTitleUa(String movieTitleUa) {
-        this.movieTitleUa = movieTitleUa;
-    }
+//    @Column(name="movie_title_en")
+//    private String movieTitleEn;
+//    @Column(name="movie_title_ua")
+//    private String movieTitleUa;
 
     public Movie getMovie() {
         return movie;

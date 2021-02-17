@@ -28,15 +28,8 @@ public interface MovieSessionRepository extends JpaRepository<MovieSession, Inte
             "OR s.movie.titleUa LIKE %?1%")
     Page<MovieSession> findAll(String keyword, Pageable pageRequest);
 
-    @Query(value = "SELECT ms.id as id, " +
-            "ms.day_of_session as dayOfSession," +
-            "ms.time_start as timeStart," +
-            "(m.id, m.title_en, m.title_ua, m.release_year, m.running_time, m.poster) as movie, " +
-            "(SELECT COUNT(*) FROM seat) - (SELECT COUNT(*) FROM seat_session ss WHERE ss.session_id = ms.id) AS seatsAvail FROM movie_session ms JOIN movie m ON ms.movie_id = m.id",
-            nativeQuery = true,
-            countQuery = "SELECT * FROM movie_session"
-    )
-    Page<MovieSession> findAllTwo(Pageable page);
+    @Query("SELECT s FROM MovieSession s")
+    Page<MovieSession> findAll(Pageable pageRequest);
 
 
 }
