@@ -1,4 +1,4 @@
-package ua.epam.project.spring.movie_theater;
+package ua.project.spring.movie_theater;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

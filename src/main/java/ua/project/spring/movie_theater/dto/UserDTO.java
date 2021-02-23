@@ -4,6 +4,9 @@ import ua.project.spring.movie_theater.config.Constants;
 
 import javax.validation.constraints.Pattern;
 
+/**
+ * User model DTO
+ */
 public class UserDTO {
     @Pattern(regexp = Constants.EMAIL_REGEX, message = "error.register.email")
     private String email;

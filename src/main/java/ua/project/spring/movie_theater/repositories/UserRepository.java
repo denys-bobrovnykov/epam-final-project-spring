@@ -5,7 +5,10 @@ import ua.project.spring.movie_theater.entities.User;
 
 import java.util.Optional;
 
-
+/**
+ * User JPA repository
+ */
 public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findUserByEmail(String email);
+
 }

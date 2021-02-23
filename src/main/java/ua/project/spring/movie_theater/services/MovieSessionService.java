@@ -20,6 +20,10 @@ import java.time.LocalTime;
 import static ua.project.spring.movie_theater.config.Constants.PAGE_SIZE;
 import static ua.project.spring.movie_theater.utils.Utils.getOrdersFromQueryParams;
 
+
+/**
+ * Movie session service
+ */
 @Service
 public class MovieSessionService {
     private final Logger logger = LogManager.getLogger(MovieSessionService.class);
@@ -29,26 +33,23 @@ public class MovieSessionService {
         this.movieSessionRepository = movieSessionRepository;
     }
 
-
-    public MovieSession getSessionByDayTime(LocalDate day, LocalTime time) {
-        return movieSessionRepository.getSessionByDayOfSessionAndTimeStart(day, time);
-    }
-
     public MovieSession getSessionFromDbById(Integer id) throws DBexception {
         return movieSessionRepository.findById(id).orElseThrow(() -> new DBexception("error.session.not.exist"));
     }
 
-
-    public Page<MovieSession> getPage(String sort, String sortDir, Integer page, String keyword) {
+    public Page<MovieSession> getPage(String sort, String sortDir, Integer page, String keyword, String value) {
         Sort orders = getOrdersFromQueryParams(sort, sortDir);
         Pageable pageRequest = PageRequest.of(page, PAGE_SIZE, orders);
         if (keyword != null) {
-            return movieSessionRepository.findAll(keyword, pageRequest);
+            switch (keyword) {
+                case "movie.title": return movieSessionRepository.findAllByTitle(value, pageRequest);
+                case "movie.releaseYear": return movieSessionRepository.findAllByReleaseYear(Integer.valueOf(value), pageRequest);
+                default: break;
+            }
         }
         return movieSessionRepository.findAll(pageRequest);
     }
 
-    @Transactional
     public MovieSession saveSession(SessionDTO session) throws DBexception {
         return movieSessionRepository.save(MovieSession.sessionBuilder()
                 .dayOfWeek(session.getDayOfSession())

@@ -7,9 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import ua.project.spring.movie_theater.entities.MovieSession;
 
-import static ua.project.spring.movie_theater.config.Constants.DEFAULT_SORT;
-import static ua.project.spring.movie_theater.config.Constants.PAGE_SIZE;
-
 public class Utils {
 
     private Utils(){}
@@ -21,17 +18,12 @@ public class Utils {
         return page;
     }
 
-    public static Integer getPagesCount(double rowcount) {
-        return (Integer) (int) Math.ceil(rowcount / PAGE_SIZE);
-    }
-
-
     public static Sort getOrdersFromQueryParams(String sortField, String dir) {
         return dir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField.split(",")).ascending() :
                 Sort.by(sortField.split(",")).descending();
     }
 
-    public static Model setModelParams(Integer page, String sortParam, String sortDir, Model model, Page<MovieSession> tablePage, String keyword) {
+    public static Model setModelParams(Integer page, String sortParam, String sortDir, Model model, Page<MovieSession> tablePage, String keyword, String value) {
         model.addAttribute("current_page", page);
         model.addAttribute("pages", tablePage.getTotalPages());
         model.addAttribute("rows", tablePage);
@@ -39,6 +31,7 @@ public class Utils {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("revSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("search", keyword == null ? "" : keyword);
+        model.addAttribute("value", value == null ? "" : value);
         return model;
     }
 

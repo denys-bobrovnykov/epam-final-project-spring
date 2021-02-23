@@ -10,8 +10,10 @@ import ua.project.spring.movie_theater.entities.User;
 import ua.project.spring.movie_theater.exceptions.DBexception;
 import ua.project.spring.movie_theater.repositories.UserRepository;
 
-import java.util.Collections;
 
+/**
+ * User registration service
+ */
 @Service
 public class RegistrationService {
 
@@ -21,23 +23,15 @@ public class RegistrationService {
         this.userRepository = userRepository;
     }
 
-    @Transactional
-    public User saveUser(UserDTO userDTO) throws DBexception{
-//        TODO make optional
-//        chekIfUserExists(userDTO);
+    public User saveUser(UserDTO userDTO) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
         String encodedPassword = encoder.encode(userDTO.getPassword());
-        return userRepository.save(User.userBuilder()
-                .email(userDTO.getEmail())
-                .password(encodedPassword)
-                .enabled(true)
-//                .role(Collections.singleton(Role.USER))
-                .role(Role.USER)
-                .build());
+            return userRepository.save(User.userBuilder()
+                    .email(userDTO.getEmail())
+                    .password(encodedPassword)
+                    .enabled(true)
+                    .role(Role.USER)
+                    .build());
     }
 
-    private User chekIfUserExists(UserDTO userDTO) throws DBexception{
-       return userRepository.findUserByEmail(userDTO.getEmail())
-               .orElseThrow(() -> new DBexception("error.register.exists"));
-    }
 }

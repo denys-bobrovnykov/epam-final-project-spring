@@ -4,6 +4,9 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.time.LocalTime;
 
+/**
+ * Validator for correct movie session start hours
+ */
 public class StartTimeValidator implements
         ConstraintValidator<StartTimeConstraint, LocalTime> {
 

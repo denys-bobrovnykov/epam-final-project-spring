@@ -9,6 +9,9 @@ import java.util.List;
 
 import static ua.project.spring.movie_theater.utils.Utils.getUserNameFromSecurity;
 
+/**
+ * Ticket service
+ */
 @Service
 public class TicketService {
     private final TicketRepository ticketRepository;
@@ -18,7 +21,7 @@ public class TicketService {
         this.ticketRepository = ticketRepository;
     }
 
-    public List<Ticket> getTicketsForCurrentUser() {
-        return ticketRepository.getAllByUser_Email(getUserNameFromSecurity());
+    public List<Ticket> getTicketsForCurrentUser(String userEmail) {
+        return ticketRepository.getAllByUser_Email(userEmail);
     }
 }

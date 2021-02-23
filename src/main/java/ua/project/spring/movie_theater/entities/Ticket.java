@@ -1,7 +1,11 @@
 package ua.project.spring.movie_theater.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
+/**
+ * Ticket entity
+ */
 @Entity
 public class Ticket {
     @Id
@@ -55,5 +59,24 @@ public class Ticket {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Ticket ticket = (Ticket) o;
+
+        if (!Objects.equals(movieSession, ticket.movieSession))
+            return false;
+        return Objects.equals(seat, ticket.seat);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = movieSession != null ? movieSession.hashCode() : 0;
+        result = 31 * result + (seat != null ? seat.hashCode() : 0);
+        return result;
     }
 }

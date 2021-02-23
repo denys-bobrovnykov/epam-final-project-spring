@@ -2,8 +2,12 @@ package ua.project.spring.movie_theater.entities;
 
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Movie entity
+ */
 @Entity
 @Table(name = "movie")
 public class Movie {
@@ -22,20 +26,33 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     private Set<MovieSession> sessions;
 
+    public Movie() {
+    }
+
+    public Movie(String titleUa, String titleEn, int releaseYear) {
+        this.titleUa = titleUa;
+        this.titleEn = titleEn;
+        this.releaseYear = releaseYear;
+    }
+
+    private Movie(MovieBuilder builder) {
+        this.titleEn = builder.titleEn;
+        this.titleUa = builder.titleUa;
+        this.releaseYear = builder.releaseYear;
+        this.runningTime = builder.runningTime;
+        this.poster = builder.poster;
+    }
+
+    public static MovieBuilder movieBuilder() {
+        return new MovieBuilder();
+    }
+
     public Set<MovieSession> getSessions() {
         return sessions;
     }
 
     public void setSessions(Set<MovieSession> sessions) {
         this.sessions = sessions;
-    }
-
-    public Movie(){}
-
-    public Movie(String titleUa, String titleEn, int releaseYear) {
-        this.titleUa = titleUa;
-        this.titleEn = titleEn;
-        this.releaseYear = releaseYear;
     }
 
     public int getId() {
@@ -86,18 +103,6 @@ public class Movie {
         this.poster = poster;
     }
 
-    private Movie(MovieBuilder builder) {
-       this.titleEn = builder.titleEn;
-       this.titleUa = builder.titleUa;
-       this.releaseYear = builder.releaseYear;
-       this.runningTime = builder.runningTime;
-       this.poster = builder.poster;
-    }
-
-    public static MovieBuilder movieBuilder() {
-        return new MovieBuilder();
-    }
-
     public static class MovieBuilder {
         private String titleEn;
         private String titleUa;
@@ -137,4 +142,23 @@ public class Movie {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Movie movie = (Movie) o;
+
+        if (releaseYear != movie.releaseYear) return false;
+        if (!Objects.equals(titleEn, movie.titleEn)) return false;
+        return Objects.equals(titleUa, movie.titleUa);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = titleEn != null ? titleEn.hashCode() : 0;
+        result = 31 * result + (titleUa != null ? titleUa.hashCode() : 0);
+        result = 31 * result + releaseYear;
+        return result;
+    }
 }

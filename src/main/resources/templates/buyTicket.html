@@ -33,7 +33,8 @@
                             </tr>
                         </th:block>
                     </table>
-                    <input th:if="${selectedSession.getSeats().size() < seatsTotal}" class="btn btn-success my-2" type="submit" th:value="#{buy.ticket}"/>
+                    <input sec:authorize="isAuthenticated()" th:if="${selectedSession.getSeats().size() < seatsTotal}" class="btn btn-success my-2" type="submit" th:value="#{buy.ticket}"/>
+                    <a href="/login" class="btn btn-warning" sec:authorize="isAnonymous()" th:text="#{please.sign.in}">Please sign in to buy ticket</a>
                 </form>
             </div>
             <div th:if="${error}" class="alert alert-warning alert-dismissible fade show" role="alert" >

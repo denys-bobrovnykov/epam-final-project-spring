@@ -1,5 +1,8 @@
 package ua.project.spring.movie_theater.exceptions;
 
+/**
+ * My custom exception
+ */
 public class DBexception extends Exception {
 
     public DBexception(String message, Throwable cause) {

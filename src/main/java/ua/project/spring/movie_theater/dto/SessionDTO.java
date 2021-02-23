@@ -13,6 +13,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
 
+/**
+ * Movie session DTO
+ */
 public class SessionDTO implements Serializable {
     @NotNull(message = "must.be.present.date")
     @FutureOrPresent(message = "alert.field.past.today")

@@ -11,6 +11,9 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
 
+/**
+ * Spring boot configuration file
+ */
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
     @Override
@@ -22,6 +25,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
     /**
      * Setting up locale change
+     *
      * @return
      */
     @Bean
@@ -37,6 +41,7 @@ public class MvcConfig implements WebMvcConfigurer {
         lci.setParamName("lang");
         return lci;
     }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());

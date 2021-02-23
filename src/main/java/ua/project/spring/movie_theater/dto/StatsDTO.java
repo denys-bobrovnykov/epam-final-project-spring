@@ -5,6 +5,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
+/**
+ * Stats object DTO
+ */
 public class StatsDTO {
     @NotNull(message = "must.be.present.start.date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")

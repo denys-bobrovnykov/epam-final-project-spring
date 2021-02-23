@@ -13,13 +13,26 @@
 </div>
 <main class="container">
     <section class="container schedule-section row my-5">
+<!--        <form action="/home" method="get">-->
+<!--            <div>-->
+<!--                <input type="text" name="search" th:placeholder="#{title.placeholder}"/>-->
+<!--                <button type="submit"  th:text="#{search.button}"/>-->
+<!--                <button type="submit" th:text="#{clear.filter.button}"/>-->
+<!--            </div>-->
+<!--        </form>-->
         <form action="/home" method="get">
             <div>
-                <input type="text" name="search" th:placeholder="#{title.placeholder}"/>
-                <button type="submit"  th:text="#{search.button}"/>
-                <button type="submit" th:text="#{clear.filter.button}"/>
+                <input type="text" name="value"/>
+                <select name="search">
+                    <option selected value="">----</option>
+                    <option th:value="${'movie.title'}" th:text="#{title.placeholder}"/>
+                    <option th:value="${'movie.releaseYear'}" th:text="#{release.year}"/>
+                </select>
+                    <button type="submit"  th:text="#{search.button}"/>
+                    <button type="submit" th:text="#{clear.filter.button}"/>
             </div>
         </form>
+
         <table class="table align-middle table-striped">
             <thead  th:replace="fragments/table_header :: table_header">
             </thead>

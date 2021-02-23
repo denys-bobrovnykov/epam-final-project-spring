@@ -3,7 +3,6 @@ package ua.project.spring.movie_theater.controllers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,14 +14,13 @@ import ua.project.spring.movie_theater.message.MessageFactory;
 import ua.project.spring.movie_theater.services.MovieService;
 import ua.project.spring.movie_theater.dto.MovieDTO;
 import ua.project.spring.movie_theater.dto.SessionDTO;
-import ua.project.spring.movie_theater.entities.MovieSession;
 import ua.project.spring.movie_theater.services.MovieSessionService;
 
 import javax.validation.Valid;
 
-import static ua.project.spring.movie_theater.config.Constants.DEFAULT_SORT;
-import static ua.project.spring.movie_theater.utils.Utils.*;
-
+/**
+ * Admin controller
+ */
 @Controller
 public class AdminController {
     private final Logger logger = LogManager.getLogger(AdminController.class);
@@ -36,17 +34,10 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public String adminPage(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-                            @RequestParam(value = "sort", required = false, defaultValue = DEFAULT_SORT) String sortParam,
-                            @RequestParam(value = "sortDir", required = false, defaultValue = "asc") String sortDir,
-                            @RequestParam(value = "filterBy", required = false) String filterParam,
-                            @RequestParam(value = "sort", required = false) String keyword,
+    public String adminPage(MovieDTO movieDTO,
                             StatsDTO statsDTO,
                             SessionDTO sessionDTO,
-                            MovieDTO movie,
                             Model model) {
-        Page<MovieSession> tablePage = sessionService.getPage(sortParam, sortDir, setValueToZeroIfNotProvidedOrNegative(page), filterParam);
-        setModelParams(page, sortParam, sortDir, model, tablePage, keyword);
         model.addAttribute("movies", movieService.getAllMovies());
         return "adminPage";
     }

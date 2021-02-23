@@ -20,7 +20,7 @@
                         </div>
                     </th:block>
                     <div th:if="${error}" class="alert alert-warning alert-dismissible fade show" role="alert" >
-                        <p th:text="#{${error.getMessage()}}"></p>
+                        <p th:text="#{${error.getText()}}"></p>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     <div class="mb-3">

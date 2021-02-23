@@ -13,6 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
+/**
+ * Spring security configuration file
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -30,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/css/**", "/js/**", "/img/**").permitAll()
                 .and()
                 .authorizeRequests()
-                    .antMatchers("/","/login","/home/**", "/register", "/seats").permitAll()
+                    .antMatchers("/","/login","/home/**", "/register", "/seats", "/buy/**").permitAll()
                     .antMatchers("/admin/**", "/stats").access("hasAuthority('ADMIN')")
                     .anyRequest().authenticated()
                 .and()

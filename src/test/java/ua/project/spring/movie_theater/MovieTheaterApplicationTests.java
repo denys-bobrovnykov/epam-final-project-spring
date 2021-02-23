@@ -1,4 +1,4 @@
-package ua.epam.project.spring.movie_theater;
+package ua.project.spring.movie_theater;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

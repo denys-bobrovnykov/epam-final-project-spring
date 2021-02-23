@@ -9,6 +9,9 @@ import ua.project.spring.movie_theater.repositories.MovieRepository;
 
 import java.util.List;
 
+/**
+ * Movie service
+ */
 @Service
 public class MovieService {
     private final MovieRepository movieRepository;
@@ -23,17 +26,13 @@ public class MovieService {
     }
 
     public Movie saveNewMovie(MovieDTO movie) throws DBexception {
-        Movie movieFromDB = movieRepository.getMovieByTitleEn(movie.getTitleEn()).orElse(null);
-        if (movieFromDB != null) {
-            throw new DBexception("error.movie.exist");
-        }
-        return movieRepository.save(Movie.movieBuilder()
+        return movieRepository.saveMovie(Movie.movieBuilder()
                 .titleEn(movie.getTitleEn())
                 .titleUa(movie.getTitleUa())
                 .releaseYear(movie.getReleaseYear())
                 .runningTime(movie.getRunningTime())
                 .poster(movie.getPoster())
                 .build()
-        );
+        ).orElseThrow(() -> new DBexception("error.movie.exist") );
     }
 }

@@ -15,6 +15,11 @@ import ua.project.spring.movie_theater.services.MovieSessionService;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ua.project.spring.movie_theater.utils.Utils.getUserNameFromSecurity;
+
+/**
+ * Buy ticket page controller
+ */
 @Controller
 public class BuyTicketController {
     private final Logger logger = LogManager.getLogger(BuyTicketController.class);
@@ -43,13 +48,14 @@ public class BuyTicketController {
     public String buyTicket(@PathVariable(name = "sessionId") Integer sessionId,
                             @RequestParam(name = "seatId", required = false) Integer[] seatId,
                             RedirectAttributes redirectAttributes) {
+        String currentUserEmail = getUserNameFromSecurity();
         if (seatId == null) {
             logger.warn("No seat selected on post");
             redirectAttributes.addFlashAttribute("error", MessageFactory.getMessage("error.choose.seat"));
             return "redirect:/buy/" + sessionId;
         }
         try {
-            redirectAttributes.addFlashAttribute("seats", seatService.buySeat(sessionId, seatId));
+            redirectAttributes.addFlashAttribute("seats", seatService.buySeat(sessionId, seatId, currentUserEmail));
         } catch (DBexception ex) {
             logger.error("Buy ticket(s) transaction failed", ex);
         }

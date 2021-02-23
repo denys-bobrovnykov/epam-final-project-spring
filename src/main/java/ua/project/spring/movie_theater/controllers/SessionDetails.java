@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import ua.project.spring.movie_theater.exceptions.DBexception;
 import ua.project.spring.movie_theater.services.MovieSessionService;
 
+/**
+ * Session details page controller
+ */
 @Controller
 public class SessionDetails {
     private final Logger logger = LogManager.getLogger(SessionDetails.class);

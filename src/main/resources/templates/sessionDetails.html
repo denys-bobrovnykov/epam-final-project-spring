@@ -31,9 +31,7 @@
                             <span th:text="${selectedSession.getMovie().getRunningTime()}"></span> <span th:text="#{minutes}"></span>
                         </p>
                         <div class="container d-flex justify-content-center">
-                            <p sec:authorize="isAuthenticated()">
-                                <a class="btn btn-success" th:href="@{/buy/{id}(id=${selectedSession.getId()})}" th:text="#{buy.ticket}"></a></p>
-                            <a href="/login" class="btn btn-warning" sec:authorize="isAnonymous()" th:text="#{please.sign.in}">Please sign in to buy ticket</a>
+                            <a class="btn btn-success" th:href="@{/buy/{id}(id=${selectedSession.getId()})}" th:text="#{preview.seats}"></a></p>
                         </div>
                     </div>
                 </div>

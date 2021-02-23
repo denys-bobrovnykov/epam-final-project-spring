@@ -2,14 +2,17 @@ package ua.project.spring.movie_theater.entities;
 
 
 import org.springframework.format.annotation.DateTimeFormat;
-import ua.project.spring.movie_theater.entities.Movie;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Movie session entity
+ */
 @Entity
 @Table(name = "movie_session")
 public class MovieSession {
@@ -29,13 +32,26 @@ public class MovieSession {
     private Movie movie;
     @Column(name = "seats_available", columnDefinition = "INT NOT NULL DEFAULT 0")
     private Integer seatsAvail;
-//    @Column(name="movie_title_en")
-//    private String movieTitleEn;
-//    @Column(name="movie_title_ua")
-//    private String movieTitleUa;
+
+    public MovieSession() {
+    }
+
+    private MovieSession(SessionBuilder builder) {
+        this.dayOfSession = builder.dayOfWeek;
+        this.timeStart = builder.timeStart;
+        this.movie = builder.movie;
+    }
+
+    public static SessionBuilder sessionBuilder() {
+        return new SessionBuilder();
+    }
 
     public Movie getMovie() {
         return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 
     public Integer getSeatsAvail() {
@@ -44,13 +60,6 @@ public class MovieSession {
 
     public void setSeatsAvail(Integer seatsBought) {
         this.seatsAvail = seatsBought;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
-    public MovieSession() {
     }
 
     public int getId() {
@@ -85,20 +94,10 @@ public class MovieSession {
         this.seats = seats;
     }
 
-    public static SessionBuilder sessionBuilder() {
-        return new SessionBuilder();
-    }
-
-    private MovieSession(SessionBuilder builder) {
-        this.dayOfSession = builder.dayOfWeek;
-        this.timeStart = builder.timeStart;
-        this.movie = builder.movie;
-    }
-
     public static class SessionBuilder {
-        private LocalDate dayOfWeek;
-        private LocalTime timeStart;
-        private Movie movie;
+        LocalDate dayOfWeek;
+        LocalTime timeStart;
+        Movie movie;
 
         public MovieSession build() {
             return new MovieSession(this);
@@ -108,13 +107,33 @@ public class MovieSession {
             this.dayOfWeek = dayOfWeek;
             return this;
         }
+
         public SessionBuilder timeStart(LocalTime timeStart) {
             this.timeStart = timeStart;
             return this;
         }
+
         public SessionBuilder movie(Movie movie) {
             this.movie = movie;
             return this;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MovieSession that = (MovieSession) o;
+
+        if (!Objects.equals(dayOfSession, that.dayOfSession)) return false;
+        return Objects.equals(timeStart, that.timeStart);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = dayOfSession != null ? dayOfSession.hashCode() : 0;
+        result = 31 * result + (timeStart != null ? timeStart.hashCode() : 0);
+        return result;
     }
 }

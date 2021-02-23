@@ -8,12 +8,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.project.spring.movie_theater.dto.UserDTO;
-import ua.project.spring.movie_theater.exceptions.DBexception;
 import ua.project.spring.movie_theater.message.MessageFactory;
 import ua.project.spring.movie_theater.services.RegistrationService;
 
 import javax.validation.Valid;
 
+/**
+ * Registration page controller
+ */
 @Controller
 @RequestMapping("/register")
 public class RegistrationController {
@@ -35,16 +37,16 @@ public class RegistrationController {
     public String addUser(@Valid UserDTO userDTO,
                           BindingResult bindingResult,
                           RedirectAttributes redirectAttributes
-                         ) {
+    ) {
         if (bindingResult.hasErrors()) {
             logger.warn("Registration validation failed {}", bindingResult);
             return "register";
         }
         try {
             registrationService.saveUser(userDTO);
-        } catch (DBexception ex) {
+        } catch (Exception ex) {
             logger.error("Error saving user in DB", ex);
-            redirectAttributes.addFlashAttribute("error", ex);
+            redirectAttributes.addFlashAttribute("error", MessageFactory.getMessage("error.register.exists"));
             redirectAttributes.addFlashAttribute("emailRedirect", userDTO.getEmail());
             return "redirect:/register";
         }

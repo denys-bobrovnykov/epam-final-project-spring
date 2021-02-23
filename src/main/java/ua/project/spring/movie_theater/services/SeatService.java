@@ -19,6 +19,9 @@ import java.util.stream.Collectors;
 
 import static ua.project.spring.movie_theater.utils.Utils.getUserNameFromSecurity;
 
+/**
+ * Seat servce
+ */
 @Service
 public class SeatService {
 
@@ -40,13 +43,12 @@ public class SeatService {
     }
 
     @Transactional
-    public List<Seat> buySeat(Integer sessionId, Integer[] seatId) throws DBexception {
+    public List<Seat> buySeat(Integer sessionId, Integer[] seatId, String userName) throws DBexception {
         List<Seat> seatsFromDb = (List<Seat>) seatRepository.findAllById(Arrays.asList(seatId));
         MovieSession sessionFromDb = movieSessionRepository.findById(sessionId)
                 .orElseThrow(() -> new DBexception("error.not.found"));
         sessionFromDb.getSeats().addAll(seatsFromDb);
         seatsFromDb.forEach(seat -> seat.getSessions().add(sessionFromDb));
-        String userName = getUserNameFromSecurity();
         User userFromDb = userRepository.findUserByEmail(userName).orElseThrow(() -> new DBexception("User not found"));
         List<Ticket> tickets = seatsFromDb.stream().map(seat -> new Ticket(sessionFromDb, userFromDb, seat))
                 .collect(Collectors.toList());

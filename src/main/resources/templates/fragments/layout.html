@@ -64,19 +64,19 @@
         <ul class="pagination justify-content-center">
             <li class="page-item">
                 <a class="page-link"
-                   th:href="@{'?page=' + ${current_page > 0 ? current_page - 1 : 0} + '&sort=' + ${sortParam} + '&sortDir=' + ${sortDir} + '&search=' + ${search}}" aria-label="Previous">
+                   th:href="@{'?page=' + ${current_page > 0 ? current_page - 1 : 0} + '&sort=' + ${sortParam} + '&sortDir=' + ${sortDir} + '&search=' + ${search} + '&value='+ ${value}}" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <th:block th:if="${pages > 0}" th:each="page : ${#numbers.sequence(0, pages - 1)}">
                 <li class="page-item" th:classappend="${current_page == page ? 'active' : ''}">
                     <a class="page-link"
-                       th:href="@{'?page=' + ${page} + '&sort=' + ${sortParam} + '&sortDir=' + ${sortDir} + '&search=' + ${search}} " th:text="${page + 1}">1</a>
+                       th:href="@{'?page=' + ${page} + '&sort=' + ${sortParam} + '&sortDir=' + ${sortDir} + '&search=' + ${search} + '&value=' + ${value}} " th:text="${page + 1}">1</a>
                 </li>
             </th:block>
             <li class="page-item">
                 <a class="page-link"
-                   th:href="@{'?page=' + ${current_page < pages - 1 ? current_page + 1 : pages - 1}+ '&sort=' + ${sortParam} + '&sortDir=' + ${sortDir} + '&search=' + ${search}}" aria-label="Next">
+                   th:href="@{'?page=' + ${current_page < pages - 1 ? current_page + 1 : pages - 1}+ '&sort=' + ${sortParam} + '&sortDir=' + ${sortDir} + '&search=' + ${search} + '&value=' + ${value}}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -86,11 +86,8 @@
 
 
 <footer th:fragment="footer">
-    <div sec:authorize="isAuthenticated()" class="text-center">
-        Logged user: <span sec:authentication="name">Bob</span>
-    </div>
-    <div sec:authorize-url="/admin" class="mx-4 text-center">
-        This will only be displayed if authenticated user can call the "/admin" URL.
+    <div class="text-center">
+        <span>© Bobrovnykov Denys </span>
     </div>
 </footer>
 
